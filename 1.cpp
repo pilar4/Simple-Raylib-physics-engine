@@ -15,11 +15,17 @@ struct liquid {
 
 float liquidPhysics(float weight, float posY, float posX, vector<liquid> vec){
     float newposY = posY;
-    if(pos >= BARRIERS.y){
-        for(auto element: vec){
-            if(element.pos.y)
+    if(posY >= BARRIERS.y){
+        newposY = BARRIERS.y - 1;
+        return newposY;
+    }
+    
+    for(auto element: vec){
+        if(element.pos.y == posY - 1){
+            
         }
-        newposY = BARRIERS.y-1;
+    }
+    newposY = BARRIERS.y-1;
     }
     else{
         newposY += weight;
