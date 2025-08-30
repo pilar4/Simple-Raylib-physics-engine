@@ -9,7 +9,7 @@ using namespace std;
 
 
 
-constexpr float GRAVITY = 1;
+constexpr int GRAVITY = 1;
 constexpr Vector2 BARRIERS = {2000, 1000};
 constexpr float screenWidth = BARRIERS.x;
 constexpr float screenHeight = BARRIERS.y;
