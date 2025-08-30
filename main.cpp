@@ -2,7 +2,9 @@
 
 int main(void)
 {
-    cout<<"check no1";
+    cout<<"\n check no1 \n \n";
+    iniMatrix();
     run();
+    cout<<endl<<matrix[0][0]<<endl;
     return 0;
 }
