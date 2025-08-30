@@ -6,5 +6,5 @@ int main(void)
     iniMatrix();
     run();
     cout<<endl<<matrix[0][0]<<endl;
-    return 0;
+    return 69;
 }
