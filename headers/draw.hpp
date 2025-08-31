@@ -1,10 +1,9 @@
 //drawing
 #ifndef DRAW_H
 #define DRAW_H
-#include "const.h"
-#include "liquid.h"
-#include "matrix.h"
-#include "sand.h"
+#include "const.hpp"
+#include "matrix.hpp"
+#include "sand.hpp"
 
 void draw(void){
     InitWindow(screenWidth, screenHeight, "physics");
@@ -15,7 +14,7 @@ void draw(void){
 
     while(running){
         int tick = 0;
-        iniMatrix();
+        initMatrix();
 
 
         
@@ -41,19 +40,17 @@ void draw(void){
                         if(matrix[x][y]=='b'){
                             DrawPixel(x, y, GREEN);
                         }
-                    }
-                }
-                
-                for(int x=1;x<bx;x++){
-                    for(int y=1;y<by;y++){
                         if(matrix[x][y]=='s'){
                             DrawPixel(x, y, YELLOW);
                         }
                     }
                 }
+                
                 //DrawSand(500, 300, 10, 10, GOLD);
-                tick++;
+                
                 gravitySand(tick);
+                
+                tick++;
             
             EndDrawing();
 

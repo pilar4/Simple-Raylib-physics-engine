@@ -1,4 +1,4 @@
-#include "headers/run.h"
+#include "headers/run.hpp"
 
 
 //rigid body, new struct, velocity vector?, only need to find firs occurance of rectangle char
@@ -6,8 +6,9 @@
 
 int main(void)
 {
+    
     cout<<"\n check no1 \n \n";
     run();
-    cout<<endl<<matrix[0][0]<<endl;
     return 0;
+    
 }

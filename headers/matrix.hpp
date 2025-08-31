@@ -1,6 +1,6 @@
 #ifndef MATRIX_H
 #define MATRIX_H
-#include "const.h"
+#include "const.hpp"
 //creating and initializing matrix with basic values that should be assigned at start
 
 char matrix[bx][by];
@@ -8,12 +8,12 @@ char matrix[bx][by];
 void clearMatrix(void){
     for (int i = 1; i < bx; i++) {
         for (int j = 1; j < by; j++) {
-            matrix[i][j] = '0';
+            matrix[i][j] = '0'; 
         }
     }
 }
 
-void iniBarriers(void){
+void initBarriers(void){
     for(int cell = 1; cell<bx; cell++){
         matrix[cell][1]='b';
         matrix[cell][by-1]='b';
@@ -25,9 +25,9 @@ void iniBarriers(void){
 }
 
 
-void iniMatrix(void){
+void initMatrix(void){
     clearMatrix();
-    iniBarriers();
+    initBarriers();
 }
 
 

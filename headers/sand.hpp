@@ -1,7 +1,7 @@
 #ifndef SAND_H
 #define SAND_H
-#include "const.h"
-#include "matrix.h"
+#include "const.hpp"
+#include "matrix.hpp"
 
 void makeSand(int mousex, int mousey){
     matrix[mousex][mousey] = 's';
