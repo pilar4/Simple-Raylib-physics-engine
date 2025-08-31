@@ -5,7 +5,7 @@
 
 char matrix[bx][by];
 
-void fillmatrix(void){
+void clearMatrix(void){
     for (int i = 1; i < bx; i++) {
         for (int j = 1; j < by; j++) {
             matrix[i][j] = '0';
@@ -14,18 +14,19 @@ void fillmatrix(void){
 }
 
 void iniBarriers(void){
-    for(int cell = 1; cell<=bx; cell++){
+    for(int cell = 1; cell<bx; cell++){
         matrix[cell][1]='b';
         matrix[cell][by-1]='b';
     }        
-    for(int cell = 1; cell<=by; cell++){
+    for(int cell = 1; cell<by; cell++){
         matrix[1][cell]='b';
         matrix[bx-1][cell]='b';
     }    
 }
 
+
 void iniMatrix(void){
-    fillmatrix();
+    clearMatrix();
     iniBarriers();
 }
 
