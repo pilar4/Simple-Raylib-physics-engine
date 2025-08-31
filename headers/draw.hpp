@@ -25,7 +25,7 @@ void draw(void){
             BeginDrawing();
                 ClearBackground(BLACK);
                 DrawFPS(20, 20); 
-                DrawText(TextFormat("Tick: %d", tick), 1800, 20, 20, GREEN);
+                DrawText(TextFormat("Tick: %d", tick), 1700, 20, 20, GREEN);
                 
                 int mousex = GetMouseX();
                 int mousey = GetMouseY();
@@ -73,4 +73,5 @@ void draw(void){
 }
 
 #endif
+
 
