@@ -1,6 +1,7 @@
 #include "headers/headers.h"
 
 
+
 //rigid body, new struct, velocity vector?, only need to find firs occurance of rectangle char
 //in matrix, simulate it as a whole
 
@@ -17,10 +18,9 @@ int main(void){
 
     bool running = true;
     while(running){
-
+        int tick = 0;
         
-        
-        vector<object> circles;
+        vector<objectCircle> circles;
         
         
 
@@ -30,14 +30,15 @@ int main(void){
         {
             
             
-            
+            tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
             
             //initializing physics
             for (auto& obj : circles) {
-                obj.applyForce(GRAVITY);
-                obj.NEWPOSITION(dt);
+                obj.APPLYFORCE(GRAVITY);
+                obj.NEWPOSITION(DELTATIME);
+                obj.DETECTBARRIERS(BARRIERS, RESTITUTION);
             }
             
             
@@ -45,11 +46,11 @@ int main(void){
             BeginDrawing();
                 ClearBackground(BLACK);
                 DrawFPS(20, 20); 
-                
+                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, GREEN);
                 
                 
                 for (auto& obj : circles) {
-                    DrawCircleV(obj.currentPosition, 10.f, RED);
+                    DrawCircleV(obj.currentPosition, 50.f, WHITE);
                 }
                 
                 
@@ -57,8 +58,10 @@ int main(void){
             EndDrawing();
 //End of drawing ----------------------------------------------------------------------------------------------------------
 
+
+
             //input handling
-            if(IsKeyDown(KEY_D)){
+            if(IsKeyPressed(KEY_D)){
                 circles.push_back({{mousex, mousey}, {mousex, mousey}, {0, 0}});
             }
             if(IsKeyPressed(KEY_ESCAPE)){
