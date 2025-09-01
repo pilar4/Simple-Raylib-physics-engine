@@ -60,10 +60,17 @@ struct objectCircle{
         oldPosition = Vector2Subtract(currentPosition, velocity);
     }
 }
+ 
 
+    void DRAGOBJ(Vector2 mouseVec){
+        if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
+            if (mouseVec.x < currentPosition.x + radius && mouseVec.y < currentPosition.y + radius &&
+                mouseVec.x > currentPosition.x - radius && mouseVec.y - currentPosition.y - radius) {
+                    currentPosition = mouseVec;
+            }
+        }
+    }
     
-    
-
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
     }

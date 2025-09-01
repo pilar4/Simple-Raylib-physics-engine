@@ -33,12 +33,14 @@ int main(void){
             tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
+            Vector2 mouseVec = {mousex, mousey};
             
             //initializing physics
             for (auto& obj : circles) {
                 obj.APPLYFORCE(GRAVITY);
                 obj.NEWPOSITION(DELTATIME);
                 obj.DETECTBARRIERS(BARRIERS, RESTITUTION);
+                obj.DRAGOBJ(mouseVec);
             }
             
             
