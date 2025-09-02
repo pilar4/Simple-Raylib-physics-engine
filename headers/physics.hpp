@@ -4,7 +4,8 @@
 //using Verlet integration
 
 
-struct objectCircle{
+class objectCircle{
+  public:
     Vector2 currentPosition;
     Vector2 oldPosition;
     Vector2 acceleration;
@@ -20,7 +21,7 @@ struct objectCircle{
         //Xn+1 = 2Xn - Xn-1 + a * Δt^2
         
         acceleration = (Vector2){0.f, 0.f};
-}
+    }
     void DETECTBARRIERS(Vector2 BARRIERS, float restitution) {
     // down side
     if (currentPosition.y + radius >= BARRIERS.y) {
@@ -82,4 +83,6 @@ struct objectCircle{
 
 
 
+
 #endif
+
