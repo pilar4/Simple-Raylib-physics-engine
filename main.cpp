@@ -6,7 +6,7 @@
 //in matrix, simulate it as a whole
 
 int main(void){
-    
+
     
     cout<<"\n check no1 \n \n";
     
@@ -29,7 +29,7 @@ int main(void){
         while (!WindowShouldClose())
         {
             
-            
+            int FPS = GetFPS();
             tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
@@ -47,8 +47,8 @@ int main(void){
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
                 ClearBackground(BLACK);
-                DrawFPS(20, 20); 
-                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, GREEN);
+                DrawText(TextFormat("FPS: %d", FPS), 20, 20, 20, WHITE; 
+                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, WHITE);
                 
                 
                 for (auto& obj : circles) {
@@ -82,4 +82,5 @@ int main(void){
     CloseWindow();
     return 0;
     
+
 }
