@@ -4,7 +4,8 @@
 //using Verlet integration
 
 
-struct objectCircle{
+class objectCircle{
+  public:
     Vector2 currentPosition;
     Vector2 oldPosition;
     Vector2 acceleration;
@@ -75,6 +76,7 @@ struct objectCircle{
         acceleration = Vector2Add(acceleration, force);
     }
 };
+
 
 
 
