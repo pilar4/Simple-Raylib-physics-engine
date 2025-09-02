@@ -1,2 +1,2 @@
 # PhysicsEngine
-Simple 2D physics engine, developed using RayLib
+Complex 2D physics engine, developed using RayLib
