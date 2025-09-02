@@ -21,7 +21,7 @@ class objectCircle{
         //Xn+1 = 2Xn - Xn-1 + a * Δt^2
         
         acceleration = (Vector2){0.f, 0.f};
-}
+    }
     void DETECTBARRIERS(Vector2 BARRIERS, float restitution) {
     // down side
     if (currentPosition.y + radius >= BARRIERS.y) {
@@ -85,3 +85,4 @@ class objectCircle{
 
 
 #endif
+
