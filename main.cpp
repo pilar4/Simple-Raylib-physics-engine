@@ -6,7 +6,7 @@
 //in matrix, simulate it as a whole
 
 int main(void){
-
+    
     
     cout<<"\n check no1 \n \n";
     
@@ -21,6 +21,7 @@ int main(void){
         int tick = 0;
         
         vector<objectCircle> circles;
+        vector<rigidBody> rigid;
         
         
 
@@ -29,7 +30,7 @@ int main(void){
         while (!WindowShouldClose())
         {
             
-            int FPS = GetFPS();
+            
             tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
@@ -40,21 +41,34 @@ int main(void){
                 obj.APPLYFORCE(GRAVITY);
                 obj.NEWPOSITION(DELTATIME);
                 obj.DETECTBARRIERS(BARRIERS, RESTITUTION);
-                obj.DRAGOBJ(mouseVec);
+                obj.PULLOBJ(mouseVec);
+            }
+
+            for(int i=0;i<circles.size();i++){
+                for(int j=0;j<circles.size();j++){
+                    HANDLECOLLISION(circles[i], circles[j]);
+                }
+            }
+
+            for (auto& obj : rigid) {
+              obj.MAKERIGID(mouseVec);
             }
             
             
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
                 ClearBackground(BLACK);
-                DrawText(TextFormat("FPS: %d", FPS), 20, 20, 20, WHITE; 
-                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, WHITE);
+                DrawFPS(20, 20); 
+                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, GREEN);
                 
                 
                 for (auto& obj : circles) {
-                    DrawCircleV(obj.currentPosition, 50.f, WHITE);
+                    DrawCircleV(obj.currentPosition, obj.radius, WHITE);
                 }
                 
+                for (auto& obj : rigid) {
+                    DrawCircleV(obj.position, obj.radius, RED);
+                }
                 
             
             EndDrawing();
@@ -65,6 +79,9 @@ int main(void){
             //input handling
             if(IsKeyPressed(KEY_D)){
                 circles.push_back({{mousex, mousey}, {mousex, mousey}, {0, 0}});
+            }
+            if(IsMouseButtonDown(MOUSE_RIGHT_BUTTON)){
+                rigid.push_back({mousex, mousey});
             }
             if(IsKeyPressed(KEY_ESCAPE)){
                 running = false;
@@ -82,5 +99,4 @@ int main(void){
     CloseWindow();
     return 0;
     
-
 }

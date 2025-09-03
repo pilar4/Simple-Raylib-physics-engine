@@ -59,11 +59,11 @@ class objectCircle{
         velocity.x *= -restitution;
 
         oldPosition = Vector2Subtract(currentPosition, velocity);
+        }
     }
-}
  
 
-    void DRAGOBJ(Vector2 mouseVec){
+    void PULLOBJ(Vector2 mouseVec){
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
             if (mouseVec.x < currentPosition.x + radius && mouseVec.y < currentPosition.y + radius &&
                 mouseVec.x > currentPosition.x - radius && mouseVec.y - currentPosition.y - radius) {
@@ -72,17 +72,75 @@ class objectCircle{
         }
     }
     
+    void DRAG(Vector2){
+        
+    }
+
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
     }
+    
+
+
+
+   
+
+
 };
 
 
 
+class rigidBody{
+  public: 
+    Vector2 position;
+    double radius = 10.f;
+
+    void MAKERIGID(Vector2 mouseVec){
+        if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
+            position = mouseVec;
+
+        }
+    }
+
+};
 
 
+    void HANDLECOLLISION(objectCircle& A, objectCircle& B) {
+        Vector2 delta = Vector2Subtract(B.currentPosition, A.currentPosition);
+        float dist = Vector2Length(delta);
+        float minDist = A.radius + B.radius;
 
+        if (dist < minDist && dist > 0.0f) {
+            // Normalize the vector
+            Vector2 normal = Vector2Scale(delta, 1.0f / dist);
 
+            // Minimum translation distance to separate balls
+            float penetration = minDist - dist;
+            Vector2 correction = Vector2Scale(normal, penetration / 2.0f);
 
-#endif
+            // Separate the two objects
+            A.currentPosition = Vector2Subtract(A.currentPosition, correction);
+            B.currentPosition = Vector2Add(B.currentPosition, correction);
 
+            // Calculate velocities
+            Vector2 vA = Vector2Subtract(A.currentPosition, A.oldPosition);
+            Vector2 vB = Vector2Subtract(B.currentPosition, B.oldPosition);
+
+            // Relative velocity
+            Vector2 relVel = Vector2Subtract(vB, vA);
+
+            // Velocity along the normal
+            float velAlongNormal = Vector2DotProduct(relVel, normal);
+
+            if (velAlongNormal > 0) return; // They are moving apart
+
+                // Calculate impulse scalar
+            float impulse = -(1.0f + RESTITUTION) * velAlongNormal / 2.0f;
+
+            Vector2 impulseVec = Vector2Scale(normal, impulse);
+
+            // Apply impulse to old positions to simulate bounce
+            A.oldPosition = Vector2Subtract(A.oldPosition, impulseVec);
+            B.oldPosition = Vector2Add(B.oldPosition, impulseVec);
+    }
+}
