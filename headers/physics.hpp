@@ -106,16 +106,16 @@ class rigidBody{
 
 
     void HANDLECOLLISION(objectCircle& A, objectCircle& B) {
-        Vector2 delta = Vector2Subtract(B.currentPosition, A.currentPosition);
-        float dist = Vector2Length(delta);
+        Vector2 displacement = Vector2Subtract(B.currentPosition, A.currentPosition);
+        float distance = Vector2Length(displacement);
         float minDist = A.radius + B.radius;
 
-        if (dist < minDist && dist > 0.0f) {
+        if (distance < minDist && distance > 0.0f) {
             // Normalize the vector
-            Vector2 normal = Vector2Scale(delta, 1.0f / dist);
+            Vector2 normal = Vector2Scale(displacement, 1.0f / distance);
 
             // Minimum translation distance to separate balls
-            float penetration = minDist - dist;
+            float penetration = minDist - distance;
             Vector2 correction = Vector2Scale(normal, penetration / 2.0f);
 
             // Separate the two objects
@@ -144,3 +144,11 @@ class rigidBody{
             B.oldPosition = Vector2Add(B.oldPosition, impulseVec);
     }
 }
+
+
+
+
+
+
+
+#endif
