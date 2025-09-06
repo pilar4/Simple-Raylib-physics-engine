@@ -1,6 +1,6 @@
 # PhysicsEngine
 ## Basic 2D physics engine, developed using RayLib
-### * Planned:
+### Planned:
 * Bouncing balls
 * Rigid bodies
 * Sand
