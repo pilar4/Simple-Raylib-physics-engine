@@ -44,8 +44,8 @@ int main(void){
                 obj.PULLOBJ(mouseVec);
             }
 
-            for(int i=0;i<circles.size();i++){
-                for(int j=0;j<circles.size();j++){
+            for(size_t i=0;i<circles.size();i++){
+                for(size_t j=0;j<circles.size();j++){
                     HANDLECOLLISION(circles[i], circles[j]);
                 }
             }
