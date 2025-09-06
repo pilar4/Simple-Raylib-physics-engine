@@ -21,7 +21,8 @@ class objectCircle{
         currentPosition = Vector2Add(Vector2Add(currentPosition, displacement), Vector2Scale(acceleration, dTime*dTime));
         
         //Xn+1 = 2Xn - Xn-1 + a * Δt^2
-        
+        //where X is position, n is step (in time), a is acceleration and Δt is delta time
+      
         acceleration = (Vector2){0.f, 0.f};
     }
     void DETECTBARRIERS(Vector2 BARRIERS, float restitution) {
@@ -154,6 +155,7 @@ void HANDLECOLLISION(objectCircle& A, objectCircle& B) {
         
     }
 }
+
 
 
 
