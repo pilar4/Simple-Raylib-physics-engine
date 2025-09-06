@@ -1,5 +1,6 @@
 # PhysicsEngine
-## Basic 2D physics engine, developed using RayLib
+## Simple 2D physics engine, developed using RayLib and C++
+## This project is designed to help learn and explore the fundamentals of simulating physics.
 ### Planned:
 - [x] Bouncing balls
 - [ ] Rigid bodies
