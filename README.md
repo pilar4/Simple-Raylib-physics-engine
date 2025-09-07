@@ -7,7 +7,7 @@
 - [ ] Sand
 - [ ] Water / other liquids
 - [ ] Gravity fields
-- [ ] Time slow / stop
+- [x] Time slow / stop
 - [ ] Toolbar
 - [ ] Some basic settings
 - [ ] Explosions
