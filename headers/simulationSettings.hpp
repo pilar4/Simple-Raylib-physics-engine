@@ -3,7 +3,7 @@
 #include "const.hpp"
 
 
-// Z: slow down, X: speed up
+// Z: slow down, X: speed up, C: reset
 
 
 class timeController {
@@ -17,6 +17,7 @@ public:
         // manipulate time
         if (IsKeyDown(KEY_Z)) denominator += 1;
         if (IsKeyDown(KEY_X)) denominator -= 1;
+        if (IsKeyDown(KEY_C)) denominator = 60;
         if (denominator < 1) denominator = 1; // safety so there is no x/0 
 
         // stop time

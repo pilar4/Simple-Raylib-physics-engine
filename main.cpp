@@ -1,5 +1,5 @@
 #include "headers/headers.h"
-
+#include <chrono>
 // MOZNA BY ZMIENIC TE WSZYSTKIE VECTOR2ADD ITD NA WLASNA MATEMATYKE I ZROBIC Z TEGO NOWY HEADER
 // PISAC POLOZENIE I MOZE PREDKOSC NA KULKACH
 
@@ -10,7 +10,7 @@ int main(void){
     
     
     cout<<"\n check no1 \n \n";
-    
+    auto startTime = chrono::high_resolution_clock::now();
     
     InitWindow(screenWidth, screenHeight, "Physics2D");
     SetTargetFPS(60);
@@ -27,12 +27,18 @@ int main(void){
         t.timeStopped = false;
         
         
-        
+
 
 
         
         while (!WindowShouldClose())
         {
+            
+            
+            auto currentTime = chrono::high_resolution_clock::now();
+            chrono::duration<float> elapsed = currentTime - startTime;
+            float runtime = elapsed.count();
+            
             
             
             tick++;
@@ -66,11 +72,14 @@ int main(void){
             BeginDrawing();
                 ClearBackground(BLACK);
                 DrawFPS(20, 20); 
-                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, GREEN);
+                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, GREEN);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), BARRIERS.x - 199, 40, 20, GREEN);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, GREEN);
+                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, GREEN);
+                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, GREEN);
+                DrawText(TextFormat("Gravity: %.2f", GRAVITY.y/100), 20, 120, 20, GREEN);
 
                 
                 
@@ -83,9 +92,9 @@ int main(void){
                     float speed = sqrt(speedx * speedx + speedy * speedy);
                     
                     
-                    DrawText(TextFormat("%.f", speed), obj.position.x - 25, obj.position.y - 25, 20, BLACK);
-                    DrawText(TextFormat("%.f", speedx), obj.position.x - 25, obj.position.y - 5, 20, BLACK);
-                    DrawText(TextFormat("%.f", speedy), obj.position.x - 25, obj.position.y + 15, 20, BLACK);
+                    DrawText(TextFormat("V:%.f", speed), obj.position.x - 25, obj.position.y - 25, 20, BLACK);
+                    DrawText(TextFormat("X:%.f", speedx), obj.position.x - 25, obj.position.y - 5, 20, BLACK);
+                    DrawText(TextFormat("Y:%.f", speedy), obj.position.x - 25, obj.position.y + 15, 20, BLACK);
                 }
                 
                 for (auto& obj : rigid) {
@@ -108,7 +117,7 @@ int main(void){
             if(IsKeyPressed(KEY_ESCAPE)){
                 running = false;
             }
-            if(IsKeyPressed(KEY_C)){
+            if(IsKeyPressed(KEY_Q)){
                 circles.clear();
                 break;
             }
