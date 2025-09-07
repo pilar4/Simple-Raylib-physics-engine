@@ -10,3 +10,4 @@
 - [ ] Time slow / stop
 - [ ] Toolbar
 - [ ] Some basic settings
+- [ ] Explosions
