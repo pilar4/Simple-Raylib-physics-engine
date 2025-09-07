@@ -40,7 +40,7 @@ int main(void){
             float runtime = elapsed.count();
             
             
-            
+            int fps = GetFPS();
             tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
@@ -71,15 +71,15 @@ int main(void){
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
                 ClearBackground(BLACK);
-                DrawFPS(20, 20); 
-                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, GREEN);
+                DrawText(TextFormat("FPS: %d", fps), 100, 20, 20, WHITE); 
+                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, WHITE);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, GREEN);
-                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, GREEN);
-                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, GREEN);
-                DrawText(TextFormat("Gravity: %.2f", GRAVITY.y/100), 20, 120, 20, GREEN);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, WHITE);
+                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, WHITE);
+                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, WHITE);
+                DrawText(TextFormat("Gravity: %.2f", GRAVITY.y/100), 20, 120, 20, WHITE);
 
                 
                 
@@ -130,4 +130,5 @@ int main(void){
     CloseWindow();
     return 0;
     
+
 }
