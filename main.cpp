@@ -34,8 +34,9 @@ int main(void){
         while (!WindowShouldClose())
         {
             
-            
+
             tick++;
+            int fps = GetFPS();
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
             Vector2 mouseVec = {mousex, mousey};
@@ -65,12 +66,12 @@ int main(void){
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
                 ClearBackground(BLACK);
-                DrawFPS(20, 20); 
-                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, GREEN);
+                DrawText(TextFormat("FPS: %d", fps), 100, 20, 20, WHITE); 
+                DrawText(TextFormat("Tick: %d", tick), BARRIERS.x - 200, 20, 20, WHITE);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), BARRIERS.x - 199, 40, 20, GREEN);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), BARRIERS.x - 199, 40, 20, WHITE);
 
                 
                 
@@ -121,4 +122,5 @@ int main(void){
     CloseWindow();
     return 0;
     
+
 }
