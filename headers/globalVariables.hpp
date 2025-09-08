@@ -20,10 +20,11 @@ constexpr float airDragValue = 1.0 - 1/10;
 Vector2 AIRDRAGVECTOR = {airDragValue, airDragValue};
 
 timeController t;
-gravirtyController g;
+gravityController g;
 float frictionCoefficient = 200.f;    
 
 
 
 
 #endif
+
