@@ -1,9 +1,15 @@
 #ifndef SIMULATIONSETTINGS_H
 #define SIMULATIONSETTINGS_H
-#include "const.hpp"
+#include "headers.h"
+#include "tests.hpp"
 
 
 // Z: slow down, X: speed up, C: reset
+
+// MOZNA BY ZMIENIC TE WSZYSTKIE VECTOR2ADD ITD NA WLASNA MATEMATYKE I ZROBIC Z TEGO NOWY HEADER
+// NAPRAWIC TIME STOP I OBJ DRAG, DODAC SUWAKI DLA GRAWITACJI I RESTITUTION ZROBIC OPORY TRAKCJI
+
+
 
 
 class timeController {
@@ -25,17 +31,19 @@ public:
             timeStopped = !timeStopped; // toggle
         }
 
-        RecalculateDeltaTime();
+        RECALCULATEDELTATIME();
+        setTest(TEST_TIME_UPDATE);
     }
 
-    void RecalculateDeltaTime() {
+    void RECALCULATEDELTATIME() {
         deltaTime = timeStopped ? 0.0f : float(numerator) / float(denominator);
         //if true use 0.0f if false use the rest after :
+        setTest(TEST_TIME_RECALCULATE);
     }
 };
 
 
-timeController t;
+
 
 
 
