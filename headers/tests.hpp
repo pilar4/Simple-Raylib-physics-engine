@@ -6,6 +6,7 @@ using namespace std;
 enum TestID {
     TEST_APPLYFORCE,
     TEST_ISONGROUND,
+    TEST_ISONWALL,
     TEST_APPLYFRICTION,
     TEST_UPDATEPOSITION,
     TEST_DETECTBARRIERS,
@@ -25,6 +26,7 @@ struct TestFlag {
 static TestFlag tests[TEST_COUNT] = {
     {"CIRCLES_APPLYFORCE", false},
     {"CIRCLES_ISONGROUND", false},
+    {"CIRCLES_ISONWALL", false},
     {"CIRCLES_APPLYFRICTION", false},
     {"CIRCLES_UPDATEPOSITION", false},
     {"CIRCLES_DETECTBARRIERS", false},

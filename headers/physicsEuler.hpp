@@ -98,14 +98,21 @@ class objectCircle{
     }
     
     bool onGround = false;
-    
+    bool onWall = false;
     void ISONGROUND(Vector2 BARRIERS) {
         if (position.y + radius >= BARRIERS.y - 0.5f || position.y - radius <= 0.5f) { //little bit of float error "0.5f"
             onGround = true;
         } else {
             onGround = false;
         }
-
+        setTest(TEST_ISONGROUND);
+    }
+    void ISONWALL(Vector2 BARRIERS) {
+        if (position.x - radius <= 0.5f || position.x + radius >= BARRIERS.x - 0.5f) { //little bit of float error "0.5f"
+            onWall = true;
+        } else {
+            onWall = false;
+        }
         setTest(TEST_ISONGROUND);
     }
 
