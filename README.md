@@ -8,6 +8,6 @@
 - [ ] Water / other liquids
 - [x] Gravity manipulation
 - [x] Time slow / stop
-- [ ] Toolbar
+- [ ] Toolbar w/ toggle on/off
 - [ ] Some basic settings
 - [ ] Explosions
