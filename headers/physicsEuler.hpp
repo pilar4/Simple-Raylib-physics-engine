@@ -113,7 +113,7 @@ class objectCircle{
         } else {
             onWall = false;
         }
-        setTest(TEST_ISONGROUND);
+        setTest(TEST_ISONWALL);
     }
 
     void APPLYFRICTION() {
@@ -127,7 +127,7 @@ class objectCircle{
 
 };
 
-void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution = 1.0f) {
+void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution) {
     Vector2 displacement = Vector2Subtract(B.position, A.position);
     float distance = Vector2Length(displacement);
     float minDist = A.radius + B.radius;

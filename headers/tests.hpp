@@ -14,6 +14,8 @@ enum TestID {
     TEST_CIRCLE_COLLISION,
     TEST_TIME_UPDATE,
     TEST_TIME_RECALCULATE,
+    TEST_RESTITUTION_UPDATE,
+    TEST_GRAVITY_UPDATE,
     TEST_COUNT
 };
 
@@ -33,6 +35,8 @@ static TestFlag tests[TEST_COUNT] = {
     {"CIRCLES_PULLOBJ", false},
     {"CIRCLE_COLLISION", false},
     {"TIME_UPDATE", false},
+    {"RESTITUTION_UPDATE", false},
+    {"GRAVITY_UPDATE", false},
     {"TIME_RECALCULATEDELTATIME", false}
 };
 
@@ -51,3 +55,5 @@ inline void TESTSRESULTS() {
 
 
 #endif
+
+

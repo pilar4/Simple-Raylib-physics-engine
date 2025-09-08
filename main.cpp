@@ -1,17 +1,12 @@
 #include "headers/headers.h"
 #include <chrono>
-/*
-MOZNA BY ZMIENIC TE WSZYSTKIE VECTOR2ADD ITD NA WLASNA MATEMATYKE I ZROBIC Z TEGO NOWY HEADER
-PISAC POLOZENIE I MOZE PREDKOSC NA KULKACH
 
-rigid body, new struct, velocity vector?, only need to find firs occurance of rectangle char
-in matrix, simulate it as a whole
-*/
+
 
 int main(void){
     
     
-    cout<<"\n check no1 \n \n";
+    cout<<"\n Startup test \n \n";
     auto startTime = chrono::high_resolution_clock::now();
     
     InitWindow(screenWidth, screenHeight, "Physics2D");
@@ -20,7 +15,7 @@ int main(void){
 
     bool running = true;
     while(running){
-        int tick = 0;
+
         
         vector<objectCircle> circles;
         vector<rigidBody> rigid;
@@ -43,7 +38,6 @@ int main(void){
             
             
             int fps = GetFPS();
-            tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
             Vector2 mouseVec = {mousex, mousey};
@@ -51,19 +45,24 @@ int main(void){
             
             //initializing physics
             for (auto& obj : circles) {
-                obj.APPLYFORCE(g.GRAVITY);
-                obj.UPDATEPOSITION();
-                obj.DETECTBARRIERS(BARRIERS, RESTITUTION);
+                obj.APPLYFORCE(g.GRAVITY);                  
+                obj.ISONGROUND(BARRIERS);
+                obj.ISONWALL(BARRIERS);
+                obj.APPLYFRICTION();           
+                obj.UPDATEPOSITION();           
+                obj.DETECTBARRIERS(BARRIERS, r.RESTITUTION); 
                 obj.PULLOBJ(mouseVec);
+
                 for (auto& sobj : circles) {
-                    CIRCLECOLLISION(obj, sobj);
+                    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
                 }
             }
             
             
             t.UPDATE();
             g.UPDATE();
-            
+            r.UPDATE();
+
 
             for (auto& obj : rigid) {
               obj.MAKERIGID(mouseVec);
@@ -80,19 +79,19 @@ int main(void){
                 else fakeNumerator = 1;
                 DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, DARKBLUE);
                 DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, DARKBLUE);
-                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, DARKBLUE);
-                DrawText(TextFormat("GravityY: %.2f", g.GRAVITY.y/100), 20, 120, 20, DARKBLUE);
+                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, DARKBLUE);
                 DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, DARKBLUE);
+                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, DARKBLUE);
 
                 
                 
                 for (auto& obj : circles) {
                     DrawCircleV(obj.position, obj.radius, WHITE);
                     
-                    float speedx = obj.velocity.x;   if (speedx < 1.0f && speedx > -1.0f) speedx = 0;
-                    float speedy = obj.velocity.y + 7;   if (speedy < 1.0f && speedy > -1.0f) speedy = 0;
-                    
+                    float speedx = obj.velocity.x;  
+                    float speedy = obj.velocity.y;   if (obj.onGround) speedy = 0.f;
                     float speed = sqrt(speedx * speedx + speedy * speedy);
+                    
                     
                     
                     DrawText(TextFormat("V:%.f", speed), obj.position.x - 25, obj.position.y - 25, 20, BLACK);
@@ -131,7 +130,8 @@ int main(void){
     }
     
     CloseWindow();
+    TESTSRESULTS();
     return 0;
     
-
+    
 }
