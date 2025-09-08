@@ -1,15 +1,12 @@
 #include "headers/headers.h"
 #include <chrono>
-// MOZNA BY ZMIENIC TE WSZYSTKIE VECTOR2ADD ITD NA WLASNA MATEMATYKE I ZROBIC Z TEGO NOWY HEADER
-// PISAC POLOZENIE I MOZE PREDKOSC NA KULKACH
 
-//rigid body, new struct, velocity vector?, only need to find firs occurance of rectangle char
-//in matrix, simulate it as a whole
+
 
 int main(void){
     
     
-    cout<<"\n check no1 \n \n";
+    cout<<"\n Startup test \n \n";
     auto startTime = chrono::high_resolution_clock::now();
     
     InitWindow(screenWidth, screenHeight, "Physics2D");
@@ -40,7 +37,7 @@ int main(void){
             float runtime = elapsed.count();
             
             
-            int fps = GetFPS();
+            
             tick++;
             float mousex = float(GetMouseX());
             float mousey = float(GetMouseY());
@@ -49,10 +46,13 @@ int main(void){
             
             //initializing physics
             for (auto& obj : circles) {
-                obj.APPLYFORCE(GRAVITY);
-                obj.UPDATEPOSITION();
-                obj.DETECTBARRIERS(BARRIERS, RESTITUTION);
+                obj.APPLYFORCE(GRAVITY);                  
+                obj.ISONGROUND(BARRIERS);        
+                obj.APPLYFRICTION();           
+                obj.UPDATEPOSITION();           
+                obj.DETECTBARRIERS(BARRIERS, 0.8f); 
                 obj.PULLOBJ(mouseVec);
+
                 for (auto& sobj : circles) {
                     CIRCLECOLLISION(obj, sobj);
                 }
@@ -71,25 +71,25 @@ int main(void){
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
                 ClearBackground(BLACK);
-                DrawText(TextFormat("FPS: %d", fps), 100, 20, 20, WHITE); 
-                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, WHITE);
+                DrawFPS(20, 20); 
+                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, GREEN);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, WHITE);
-                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, WHITE);
-                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, WHITE);
-                DrawText(TextFormat("Gravity: %.2f", GRAVITY.y/100), 20, 120, 20, WHITE);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, GREEN);
+                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, GREEN);
+                DrawText(TextFormat("Restitution: %.2f", RESTITUTION), 20, 100, 20, GREEN);
+                DrawText(TextFormat("Gravity: %.2f", GRAVITY.y/100), 20, 120, 20, GREEN);
 
                 
                 
                 for (auto& obj : circles) {
                     DrawCircleV(obj.position, obj.radius, WHITE);
                     
-                    float speedx = obj.velocity.x;   if (speedx < 1.0f && speedx > -1.0f) speedx = 0;
-                    float speedy = obj.velocity.y + 7;   if (speedy < 1.0f && speedy > -1.0f) speedy = 0;
-                    
+                    float speedx = obj.velocity.x;  
+                    float speedy = obj.velocity.y;   if (obj.onGround) speedy = 0.f;
                     float speed = sqrt(speedx * speedx + speedy * speedy);
+                    
                     
                     
                     DrawText(TextFormat("V:%.f", speed), obj.position.x - 25, obj.position.y - 25, 20, BLACK);
@@ -128,7 +128,7 @@ int main(void){
     }
     
     CloseWindow();
+    TESTSRESULTS();
     return 0;
     
-
 }
