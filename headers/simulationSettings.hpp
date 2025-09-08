@@ -1,19 +1,16 @@
 #ifndef SIMULATIONSETTINGS_H
 #define SIMULATIONSETTINGS_H
-#include "headers.h"
+#include "const.hpp"
 #include "tests.hpp"
 
 
-// Z: slow down, X: speed up, C: reset
-
-// MOZNA BY ZMIENIC TE WSZYSTKIE VECTOR2ADD ITD NA WLASNA MATEMATYKE I ZROBIC Z TEGO NOWY HEADER
-// NAPRAWIC TIME STOP I OBJ DRAG, DODAC SUWAKI DLA GRAWITACJI I RESTITUTION ZROBIC OPORY TRAKCJI
-
-
+// Z: tiome slow down, X: time speed up, C: reset
+// V: gravity slow down, B: gravity speed up, M: gravity left, N: gravity right
+// D: balls, RMB: rigid, Q: balls clear
 
 
 class timeController {
-public:
+  public:
     int numerator = 1;
     int denominator = 60;
     float deltaTime = float(numerator) / float(denominator);
@@ -31,20 +28,38 @@ public:
             timeStopped = !timeStopped; // toggle
         }
 
-        RECALCULATEDELTATIME();
-        setTest(TEST_TIME_UPDATE);
+        RecalculateDeltaTime();
     }
 
-    void RECALCULATEDELTATIME() {
+    void RecalculateDeltaTime() {
         deltaTime = timeStopped ? 0.0f : float(numerator) / float(denominator);
         //if true use 0.0f if false use the rest after :
-        setTest(TEST_TIME_RECALCULATE);
     }
+};
+ 
+
+class gravityController { 
+  public:
+    Vector2 GRAVITY = {0.f, 980.f};
+    
+    void UPDATE() {
+        
+        // manipulate GRAVITY left / right included
+        if (IsKeyDown(KEY_V)) GRAVITY.y += 10.f;
+        if (IsKeyDown(KEY_B)) GRAVITY.y -= 10.f;
+        if (IsKeyDown(KEY_N)) GRAVITY.x -= 10.f;
+        if (IsKeyDown(KEY_M)) GRAVITY.x += 10.f;
+
+        
+        if (IsKeyDown(KEY_C)){
+            GRAVITY = {0.f, 980.f};
+        }
+    }   
 };
 
 
-
-
+timeController t;
+gravityController g;
 
 
 #endif

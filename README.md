@@ -6,7 +6,7 @@
 - [ ] Rigid bodies
 - [ ] Sand
 - [ ] Water / other liquids
-- [ ] Gravity fields
+- [x] Gravity manipulation
 - [x] Time slow / stop
 - [ ] Toolbar
 - [ ] Some basic settings
