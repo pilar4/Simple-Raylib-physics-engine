@@ -1,6 +1,7 @@
 #ifndef SIMULATIONSETTINGS_H
 #define SIMULATIONSETTINGS_H
 #include "const.hpp"
+#include "tests.hpp"
 
 
 // Z: tiome slow down, X: time speed up, C: reset
@@ -59,5 +60,6 @@ class gravityController {
 
 timeController t;
 gravityController g;
+
 
 #endif
