@@ -48,8 +48,8 @@ class gravityController {
     void UPDATE() {
 
         // manipulate GRAVITY left / right included
-        if (IsKeyDown(KEY_I)) GRAVITY.y += multiplier;
-        if (IsKeyDown(KEY_K)) GRAVITY.y -= multiplier;
+        if (IsKeyDown(KEY_I)) GRAVITY.y -= multiplier;
+        if (IsKeyDown(KEY_K)) GRAVITY.y += multiplier;
         if (IsKeyDown(KEY_J)) GRAVITY.x -= multiplier;
         if (IsKeyDown(KEY_L)) GRAVITY.x += multiplier;
 
@@ -79,6 +79,7 @@ class restitutionController {
         setTest(TEST_RESTITUTION_UPDATE);
     }   
 };
+
 
 
 
