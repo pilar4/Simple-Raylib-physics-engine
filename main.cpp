@@ -3,6 +3,7 @@
 
 
 
+
 int main(void){
     
     
@@ -11,18 +12,23 @@ int main(void){
     
     InitWindow(screenWidth, screenHeight, "Physics2D");
     SetTargetFPS(60);
+    
 
-    bool fullscreen = false;
     bool running = true;
     while(running){
 
         
         vector<objectCircle> circles;
-        vector<rigidBody> rigid;
+        vector<Brush> brushes;
+
+
+        bool fullscreen = false;
+        
+        /*
         t.numerator = 1;
         t.denominator = 60;
         t.timeStopped = false;
-        
+        */
         
 
 
@@ -56,7 +62,15 @@ int main(void){
                 for (auto& sobj : circles) {
                     CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
                 }
+                
+                for (auto &brush : brushes) {
+                    CircleBrushCollision(obj, brush, 0.8f);
+                }
             }
+            
+            
+
+            
             
             
             t.UPDATE();
@@ -64,26 +78,25 @@ int main(void){
             r.UPDATE();
 
 
-            for (auto& obj : rigid) {
-              obj.MAKERIGID(mouseVec);
-            }
+
             
             
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
-                ClearBackground(DARKGRAY);
+                ClearBackground(BLACK);
                 DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, SKYBLUE); 
                 DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, SKYBLUE);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, SKYBLUE);
-                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, SKYBLUE);
-                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, SKYBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, SKYBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, SKYBLUE);
-
-                DrawText(TextFormat("Q: reset everything, C; reset parameters, D: spawn balls, SPACE: time, Z X: time, T, G: restitution, I J K L: gravity, O: bilard mode :3"), BARRIERS.x - 600, 20, 20, SKYBLUE);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, DARKBLUE);
+                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, DARKBLUE);
+                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, DARKBLUE);
+                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, DARKBLUE);
+                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, DARKBLUE);
+                DrawText(TextFormat("Friction: %.f", frictionCoefficient), 20, 160, 20, DARKBLUE);
+                DrawText(TextFormat("Q: reset objects, C; reset parameters, D: spawn balls,\nTime: SPACE Z X Restitution: T G, Gravity: I J K L\nO: 8ball mode"),
+                BARRIERS.x - 600, 20, 20, SKYBLUE);
 
                 
                 
@@ -101,38 +114,49 @@ int main(void){
                     DrawText(TextFormat("Y:%.f", speedy), obj.position.x - 25, obj.position.y + 15, 20, BLACK);
                 }
                 
-                for (auto& obj : rigid) {
-                    DrawCircleV(obj.position, obj.radius, RED);
+                for (auto &brush : brushes) {
+                    brush.Draw();
                 }
                 
-            
+                
+                
             EndDrawing();
 //End of drawing ----------------------------------------------------------------------------------------------------------
 
 
 
             //input handling
-            if (IsKeyPressed(KEY_D)){
+            if(IsKeyPressed(KEY_D)){
                 circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
             }
-            if (IsKeyDown(KEY_M)){
-                circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
+            
+            if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
+                brushes.push_back(Brush(mousex, mousey, 10, 10));
             }
-            if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)){
-                rigid.push_back({mousex, mousey});
-            }
-            if (IsKeyPressed(KEY_ESCAPE)){
-                running = false;
-            }
-            if (IsKeyPressed(KEY_Q)){
-                circles.clear();
-                break;
-            }
+            
             if (IsKeyPressed(KEY_F)){
                 fullscreen = !fullscreen;
                 if(fullscreen == true) ToggleFullscreen();
                 else RestoreWindow();
-            }   
+            }  
+            
+            if (IsKeyDown(KEY_M)){
+                circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
+            }
+            
+            if (IsKeyDown(KEY_O)){
+
+                g.GRAVITY = {0, 0};
+
+            }
+
+            if(IsKeyPressed(KEY_ESCAPE)){
+                running = false;
+            }
+            if(IsKeyPressed(KEY_Q)){
+                circles.clear();
+                break;
+            }
 
         
             
@@ -144,5 +168,4 @@ int main(void){
     return 0;
     
     
-
 }

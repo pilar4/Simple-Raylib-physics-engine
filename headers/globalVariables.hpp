@@ -15,9 +15,11 @@ constexpr float screenWidth = BARRIERS.x;
 constexpr float screenHeight = BARRIERS.y;
 constexpr float airDragValue = 1.0 - 1/10;
 Vector2 AIRDRAGVECTOR = {airDragValue, airDragValue};
+
 gravityController g;
 timeController t;
 restitutionController r;
+
 float frictionCoefficient = 200.f;    
 
 

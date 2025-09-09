@@ -5,6 +5,7 @@
 
 
 
+
 // Z: tiome slow down, X: time speed up, C: reset
 // I J K L gravity change
 // D: balls, RMB: rigid, Q: balls clear
@@ -48,8 +49,8 @@ class gravityController {
     void UPDATE() {
 
         // manipulate GRAVITY left / right included
-        if (IsKeyDown(KEY_I)) GRAVITY.y -= multiplier;
-        if (IsKeyDown(KEY_K)) GRAVITY.y += multiplier;
+        if (IsKeyDown(KEY_I)) GRAVITY.y += multiplier;
+        if (IsKeyDown(KEY_K)) GRAVITY.y -= multiplier;
         if (IsKeyDown(KEY_J)) GRAVITY.x -= multiplier;
         if (IsKeyDown(KEY_L)) GRAVITY.x += multiplier;
 
@@ -79,7 +80,17 @@ class restitutionController {
         setTest(TEST_RESTITUTION_UPDATE);
     }   
 };
+/*
+class randomColor {
+  public:
+    random_device rd;          
+    mt19937 gen(rd());         
+    uniform_int_distribution<> dist(0, 99); //from 0 to 99
 
+    int randomNum = dist(gen);
+    
+    
+}; */
 
 
 
