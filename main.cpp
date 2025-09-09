@@ -83,6 +83,8 @@ int main(void){
                 DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, DARKBLUE);
                 DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, DARKBLUE);
 
+                DrawText(TextFormat("Q: reset everything, C; reset parameters, D: spawn balls, SPACE: time, Z X: time, T, G: restitution, I J K L: gravity"), BARRIERS.x - 600, 20, 20, DARKBLUE);
+
                 
                 
                 for (auto& obj : circles) {
@@ -134,4 +136,5 @@ int main(void){
     return 0;
     
     
+
 }
