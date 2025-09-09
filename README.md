@@ -11,3 +11,6 @@
 - [ ] Toolbar w/ toggle on/off
 - [ ] Some basic settings
 - [ ] Explosions
+- [ ] bilard
+- [ ] colorful balls
+- [ ] black hole
