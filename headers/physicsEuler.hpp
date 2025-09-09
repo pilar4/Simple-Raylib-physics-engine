@@ -158,16 +158,63 @@ void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution) {
     setTest(TEST_CIRCLE_COLLISION);
 }
 
-class rigidBody{
-  public: 
-    Vector2 position;
-    double radius = 10.f;
+class Brush {
+  public:
+    Rectangle rect;
+    Color color = GRAY;
 
-    void MAKERIGID(Vector2 mouseVec){
-        if(IsMouseButtonPressed(MOUSE_RIGHT_BUTTON)){
-            position = mouseVec;
-        }
+    Brush(float x, float y, float w, float h) {
+        rect = {x, y, w, h};
+    }
+
+    void Draw() {
+        DrawRectangleRec(rect, color);
     }
 };
+
+
+void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restitution) {
+    // find nearest point from square to circle
+    //fminf means pick smaller number from two and vice versa with fmaxf
+    
+    
+    //                realy smart line lmao no way i would figuer it out
+    //                if circle position is bigger than right side of rectangle position then nearest is set as right side of square
+    //                and if circle position is more to the left than the left side of square, value is set as this side
+    //                OTHERWISE, the nearest is set as circle position, same with y axis
+    
+    //                  left side of rectangle                            right side of rectangle
+    float nearestX = fmaxf(brush.rect.x, fminf(circle.position.x, brush.rect.x + brush.rect.width));
+    float nearestY = fmaxf(brush.rect.y, fminf(circle.position.y, brush.rect.y + brush.rect.height));
+
+    //calc distance
+    float dx = circle.position.x - nearestX;
+    float dy = circle.position.y - nearestY;
+    float distance = sqrt(dx*dx + dy*dy);
+
+    if (distance < circle.radius) {
+        Vector2 normal;
+        
+        // 0.0001 so there is no division by 0
+        if (distance > 0.0001f) {                           //IMPORTANT, vec normal is from square to circle ONLY and not otherwise
+            normal = {dx / distance, dy / distance};        //so if vel is in the same direction it will have a positive num, this is why there is if there
+        } else {                                     
+            normal = {0, -1};  // if somehow distance is even closer to 0 and all hell let loose
+        }
+
+        // to fix clipping
+        float penetration = circle.radius - distance;
+        circle.position.x += normal.x * penetration;
+        circle.position.y += normal.y * penetration;
+      
+        // 
+        float velAlongNormal = Vector2DotProduct(circle.velocity, normal);  //relative velocity
+        if (velAlongNormal < 0) {                  //         <----------------------------------------------- here
+            circle.velocity.x -= (1 + r.RESTITUTION) * velAlongNormal * normal.x;
+            circle.velocity.y -= (1 + r.RESTITUTION) * velAlongNormal * normal.y;
+        }
+    }
+}
+
 
 #endif
