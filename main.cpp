@@ -12,7 +12,7 @@ int main(void){
     InitWindow(screenWidth, screenHeight, "Physics2D");
     SetTargetFPS(60);
 
-
+    bool fullscreen = false;
     bool running = true;
     while(running){
 
@@ -71,19 +71,19 @@ int main(void){
             
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
-                ClearBackground(BLACK);
-                DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, DARKBLUE); 
-                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, DARKBLUE);
+                ClearBackground(DARKGRAY);
+                DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, SKYBLUE); 
+                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, SKYBLUE);
                 int fakeNumerator;
                 if(t.deltaTime == 0.f) fakeNumerator = 0;
                 else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, DARKBLUE);
-                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, DARKBLUE);
-                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, DARKBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, DARKBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, DARKBLUE);
+                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, SKYBLUE);
+                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, SKYBLUE);
+                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, SKYBLUE);
+                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, SKYBLUE);
+                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, SKYBLUE);
 
-                DrawText(TextFormat("Q: reset everything, C; reset parameters, D: spawn balls, SPACE: time, Z X: time, T, G: restitution, I J K L: gravity"), BARRIERS.x - 600, 20, 20, DARKBLUE);
+                DrawText(TextFormat("Q: reset everything, C; reset parameters, D: spawn balls, SPACE: time, Z X: time, T, G: restitution, I J K L: gravity, O: bilard mode :3"), BARRIERS.x - 600, 20, 20, SKYBLUE);
 
                 
                 
@@ -112,19 +112,27 @@ int main(void){
 
 
             //input handling
-            if(IsKeyPressed(KEY_D)){
+            if (IsKeyPressed(KEY_D)){
                 circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
             }
-            if(IsMouseButtonDown(MOUSE_RIGHT_BUTTON)){
+            if (IsKeyDown(KEY_M)){
+                circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
+            }
+            if (IsMouseButtonDown(MOUSE_RIGHT_BUTTON)){
                 rigid.push_back({mousex, mousey});
             }
-            if(IsKeyPressed(KEY_ESCAPE)){
+            if (IsKeyPressed(KEY_ESCAPE)){
                 running = false;
             }
-            if(IsKeyPressed(KEY_Q)){
+            if (IsKeyPressed(KEY_Q)){
                 circles.clear();
                 break;
             }
+            if (IsKeyPressed(KEY_F)){
+                fullscreen = !fullscreen;
+                if(fullscreen == true) ToggleFullscreen();
+                else RestoreWindow();
+            }   
 
         
             
