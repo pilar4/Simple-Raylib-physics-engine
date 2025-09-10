@@ -80,17 +80,9 @@ class restitutionController {
         setTest(TEST_RESTITUTION_UPDATE);
     }   
 };
-/*
-class randomColor {
-  public:
-    random_device rd;          
-    mt19937 gen(rd());         
-    uniform_int_distribution<> dist(0, 99); //from 0 to 99
 
-    int randomNum = dist(gen);
-    
-    
-}; */
+
+
 
 
 Color COLORS[] = {

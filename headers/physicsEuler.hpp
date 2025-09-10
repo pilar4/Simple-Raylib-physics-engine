@@ -3,6 +3,7 @@
 #include "globalVariables.hpp"
 #include "simulationSettings.hpp"
 #include "tests.hpp"
+#include "cameraHud.hpp"
 // using semi-implicit Euler
 
 class objectCircle{
@@ -176,13 +177,12 @@ class Brush {
     }
 };
 
-
 void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restitution) {
     // find nearest point from square to circle
     //fminf means pick smaller number from two and vice versa with fmaxf
     
     
-    //                realy smart line lmao no way i would figuer it out
+    //                realy smart line lmao no way i would have figured it out
     //                if circle position is bigger than right side of rectangle position then nearest is set as right side of square
     //                and if circle position is more to the left than the left side of square, value is set as this side
     //                OTHERWISE, the nearest is set as circle position, same with y axis
@@ -218,6 +218,7 @@ void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restit
             circle.velocity.y -= (1 + r.RESTITUTION) * velAlongNormal * normal.y;
         }
     }
+    setTest(TEST_BRUSH_CIRCLE);
 }
 
 
