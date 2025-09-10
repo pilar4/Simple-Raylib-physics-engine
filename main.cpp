@@ -21,7 +21,7 @@ int main(void){
         vector<objectCircle> circles;
         vector<Brush> brushes;
 
-
+        bool stats = true;
         bool fullscreen = false;
         
         /*
@@ -83,35 +83,38 @@ int main(void){
             
 //Drawing -----------------------------------------------------------------------------------------------------------------
             BeginDrawing();
-                ClearBackground(BLACK);
-                DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, SKYBLUE); 
-                DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, SKYBLUE);
-                int fakeNumerator;
-                if(t.deltaTime == 0.f) fakeNumerator = 0;
-                else fakeNumerator = 1;
-                DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, DARKBLUE);
-                DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, DARKBLUE);
-                DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, DARKBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, DARKBLUE);
-                DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, DARKBLUE);
-                DrawText(TextFormat("Friction: %.f", frictionCoefficient), 20, 160, 20, DARKBLUE);
-                DrawText(TextFormat("Q: reset objects, C; reset parameters, D: spawn balls,\nTime: SPACE Z X Restitution: T G, Gravity: I J K L\nO: 8ball mode"),
-                BARRIERS.x - 600, 20, 20, SKYBLUE);
-
-                
+                if(stats){
+                    ClearBackground(BLACK);
+                    DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, SKYBLUE); 
+                    DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, SKYBLUE);
+                    int fakeNumerator;
+                    if(t.deltaTime == 0.f) fakeNumerator = 0;
+                    else fakeNumerator = 1;
+                    DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, SKYBLUE);
+                    DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, SKYBLUE);
+                    DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, SKYBLUE);
+                    DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, SKYBLUE);
+                    DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, SKYBLUE);
+                    DrawText(TextFormat("Friction: %.f", frictionCoefficient), 20, 160, 20, SKYBLUE);
+                    DrawText(TextFormat("Q: reset objects, C; reset parameters, D: spawn balls,\nTime: SPACE Z X Restitution: T G, Gravity: I J K L\nO: 8ball mode"),
+                    BARRIERS.x - 600, 20, 20, SKYBLUE);
+                }
                 
                 for (auto& obj : circles) {
-                    DrawCircleV(obj.position, obj.radius, WHITE);
+                    
+                    
+                    DrawCircleV(obj.position, obj.radius, obj.circleColor);
                     
                     float speedx = obj.velocity.x;  
                     float speedy = obj.velocity.y;   if (obj.onGround) speedy = 0.f;
                     float speed = sqrt(speedx * speedx + speedy * speedy);
                     
                     
-                    
+                    /*
                     DrawText(TextFormat("V:%.f", speed), obj.position.x - 25, obj.position.y - 25, 20, BLACK);
                     DrawText(TextFormat("X:%.f", speedx), obj.position.x - 25, obj.position.y - 5, 20, BLACK);
                     DrawText(TextFormat("Y:%.f", speedy), obj.position.x - 25, obj.position.y + 15, 20, BLACK);
+                    */
                 }
                 
                 for (auto &brush : brushes) {
@@ -157,9 +160,10 @@ int main(void){
                 circles.clear();
                 break;
             }
-
-        
             
+            if (IsKeyPressed(KEY_W)){
+                stats = !stats;
+            }
         }
     }
     
