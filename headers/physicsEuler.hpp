@@ -14,6 +14,10 @@ class objectCircle{
     double radius = 50.f;
     //double instead of float because it increases precision by a wide margin
     //also the smaller delta time the better for simulations
+
+
+    Color circleColor = COLORS[GetRandomValue(0, 14)];
+    //color here so each frame doesnt change color
     
     bool isDragging = false;
     Vector2 lastMousePos = {0.0f, 0.0f};

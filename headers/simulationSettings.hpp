@@ -49,8 +49,8 @@ class gravityController {
     void UPDATE() {
 
         // manipulate GRAVITY left / right included
-        if (IsKeyDown(KEY_I)) GRAVITY.y += multiplier;
-        if (IsKeyDown(KEY_K)) GRAVITY.y -= multiplier;
+        if (IsKeyDown(KEY_K)) GRAVITY.y += multiplier;
+        if (IsKeyDown(KEY_I)) GRAVITY.y -= multiplier;
         if (IsKeyDown(KEY_J)) GRAVITY.x -= multiplier;
         if (IsKeyDown(KEY_L)) GRAVITY.x += multiplier;
 
@@ -91,6 +91,15 @@ class randomColor {
     
     
 }; */
+
+
+Color COLORS[] = {
+    MAROON,  RED,       ORANGE, 
+    GOLD,    DARKGREEN, GREEN, 
+    LIME,    DARKBLUE,  BLUE, 
+    SKYBLUE, PURPLE,    VIOLET, 
+    MAGENTA, PINK,      BEIGE
+};
 
 
 
