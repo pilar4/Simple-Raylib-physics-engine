@@ -4,6 +4,7 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "simulationSettings.hpp"
+#include "cameraHud.hpp"
 #include <iostream>
 #include <vector>
 #include <cmath>
@@ -18,12 +19,10 @@ Vector2 AIRDRAGVECTOR = {airDragValue, airDragValue};
 constexpr int bGirth = 15;
 
 
-
+CameraHud cam;
 gravityController g;
 timeController t;
 restitutionController r;
-
-
 float frictionCoefficient = 200.f;    
 
 

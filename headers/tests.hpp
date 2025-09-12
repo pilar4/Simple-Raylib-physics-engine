@@ -15,6 +15,7 @@ enum TestID {
     TEST_BRUSH_CIRCLE,
     TEST_TIME_UPDATE,
     TEST_TIME_RECALCULATE,
+    TEST_CAMERA_UPDATE,
     TEST_RESTITUTION_UPDATE,
     TEST_GRAVITY_UPDATE,
     TEST_COUNT
@@ -39,6 +40,7 @@ static TestFlag tests[TEST_COUNT] = {
     {"TIME_UPDATE", false},
     {"RESTITUTION_UPDATE", false},
     {"GRAVITY_UPDATE", false},
+    {"CAMERA_UPDATE", false},
     {"TIME_RECALCULATEDELTATIME", false}
 };
 

@@ -15,9 +15,9 @@ int main(void){
         vector<objectCircle> circles;
         vector<Brush> brushes;
 
-        bool stats = true;
+
         bool fullscreen = false;
-        CameraHud cam;
+        
 
         while (!WindowShouldClose())
         {
@@ -61,22 +61,13 @@ int main(void){
 
                 BeginMode2D(cam.GetCamera());
 
-                    if(stats){
+
                         ClearBackground(BLACK);
-                        DrawText(TextFormat("FPS: %d", fps), 20, 20, 20, SKYBLUE); 
-                        DrawText(TextFormat("Run time: %.2f s", runtime), 20, 40, 20, SKYBLUE);
-                        int fakeNumerator;
-                        if(t.deltaTime == 0.f) fakeNumerator = 0;
-                        else fakeNumerator = 1;
-                        DrawText(TextFormat("Delta time: %d/%d", fakeNumerator, t.denominator), 20, 60, 20, SKYBLUE);
-                        DrawText(TextFormat("Mouse position: %.f - %.f", mousex, mousey), 20, 80, 20, SKYBLUE);
-                        DrawText(TextFormat("Restitution: %.3f", r.RESTITUTION), 20, 100, 20, SKYBLUE);
-                        DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.x/100), 20, 120, 20, SKYBLUE);
-                        DrawText(TextFormat("GravityX: %.2f", g.GRAVITY.y/100), 20, 140, 20, SKYBLUE);
-                        DrawText(TextFormat("Friction: %.f", frictionCoefficient), 20, 160, 20, SKYBLUE);
-                        DrawText(TextFormat("Q: reset objects, C; reset parameters, D: spawn balls,\nTime: SPACE Z X Restitution: T G, Gravity: I J K L\nO: 8ball mode"),
-                        BARRIERS.x - 600, 20, 20, SKYBLUE);
-                    }
+                        
+                        cam.printText(fps, runtime,mousex, mousey, t, r, g,  frictionCoefficient, BARRIERS);
+                        
+                        
+
 
                     for(int i=0;i<=BARRIERS.x;i++){
                         for(int j=0;j>-bGirth;j--){
@@ -141,10 +132,6 @@ int main(void){
             if(IsKeyPressed(KEY_Q)){
                 circles.clear();
                 break;
-            }
-
-            if (IsKeyPressed(KEY_W)){
-                stats = !stats;
             }
 
         } // koniec while (!WindowShouldClose())
