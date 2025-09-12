@@ -3,14 +3,13 @@
 **This project is designed to help learn and explore the fundamentals of simulating physics.**
 ### Planned:
 - [x] Bouncing balls
-- [ ] Rigid bodies
+- [x] Rigid bodies
+- [x] Working camera
 - [ ] Sand
 - [ ] Water / other liquids
 - [x] Gravity manipulation
+- [ ] Gravity fields (black holes and such)
 - [x] Time slow / stop
 - [ ] Toolbar w/ toggle on/off
-- [ ] Some basic settings
+- [x] Some basic settings
 - [ ] Explosions
-- [ ] bilard
-- [ ] colorful balls
-- [ ] black hole
