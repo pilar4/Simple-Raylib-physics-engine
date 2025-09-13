@@ -12,7 +12,7 @@ class objectCircle{
     Vector2 position;      
     Vector2 velocity;       
     Vector2 acceleration;
-    double radius = 50.f;
+    double radius = 20.f;
     //double instead of float because it increases precision by a wide margin
     //also the smaller delta time the better for simulations
 

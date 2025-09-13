@@ -10,6 +10,7 @@ class CameraHud {
     Vector2 dragStart;
     bool dragging;
     
+
     
     CameraHud() {
         camera.target = {0.0f, 0.0f};
@@ -24,13 +25,17 @@ class CameraHud {
 
 
 
+    
+
+
+
 
     void Update() {
         float wheel = GetMouseWheelMove(); 
         if (wheel != 0.0f) {
                 float zoomIncrement = 0.05f;
                 camera.zoom += wheel * zoomIncrement;
-                if (camera.zoom < 0.1f) camera.zoom = 0.1f;  //safety barriers
+                if (camera.zoom < 1.f) camera.zoom = 1.f;  //safety barriers
                 if (camera.zoom > 10.0f) camera.zoom = 10.0f;
         }
 
@@ -49,6 +54,18 @@ class CameraHud {
             camera.target.x = cameraStart.x - mouseDelta.x / camera.zoom;
             camera.target.y = cameraStart.y - mouseDelta.y / camera.zoom;
         }
+        
+        float leftLimit   = 0 + (camera.offset.x / camera.zoom);
+float topLimit    = 0 + (camera.offset.y / camera.zoom);
+float rightLimit  = BARRIERS.x - (GetScreenWidth() - camera.offset.x) / camera.zoom;
+float bottomLimit = BARRIERS.y - (GetScreenHeight() - camera.offset.y) / camera.zoom;
+
+if (camera.target.x < leftLimit) camera.target.x = leftLimit;
+if (camera.target.y < topLimit) camera.target.y = topLimit;
+if (camera.target.x > rightLimit) camera.target.x = rightLimit;
+if (camera.target.y > bottomLimit) camera.target.y = bottomLimit;
+
+
     
         setTest(TEST_CAMERA_UPDATE);
     }

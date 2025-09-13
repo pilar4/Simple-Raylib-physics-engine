@@ -2,7 +2,7 @@
 #include <chrono>
 
 int main(void){
-
+    CameraHud cam;
     cout<<"\n Startup test \n \n";
     auto startTime = std::chrono::high_resolution_clock::now();
 
@@ -74,7 +74,7 @@ int main(void){
                             DrawPixel(i, j, RED);
                         }
                         for(int j=0;j<bGirth;j++){
-                            DrawPixel(i, BARRIERS.y + j, RED);
+                            DrawPixel(i, BARRIERS.y + j-1, RED);
                         }
                     }
 
@@ -83,7 +83,7 @@ int main(void){
                             DrawPixel(j, i, RED);
                         }
                         for(int j=0;j<bGirth;j++){
-                            DrawPixel(BARRIERS.x + j, i, RED);
+                            DrawPixel(BARRIERS.x + j-1, i, RED);
                         }
                     }
 

@@ -4,22 +4,21 @@
 #include "raylib.h"
 #include "raymath.h"
 #include "simulationSettings.hpp"
-#include "cameraHud.hpp"
 #include <iostream>
 #include <vector>
 #include <cmath>
 using namespace std;
 
 
-constexpr Vector2 BARRIERS = {2500, 2500};
-constexpr float screenWidth = 1800;
-constexpr float screenHeight = 1000;
+constexpr Vector2 BARRIERS = {1920, 1080};
+constexpr float screenWidth = 1920;
+constexpr float screenHeight = 1080;
 constexpr float airDragValue = 1.0 - 1/10;
 Vector2 AIRDRAGVECTOR = {airDragValue, airDragValue};
 constexpr int bGirth = 15;
 
 
-CameraHud cam;
+
 gravityController g;
 timeController t;
 restitutionController r;
