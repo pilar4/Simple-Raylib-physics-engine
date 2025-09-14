@@ -51,6 +51,18 @@ int main(void){
                     CircleBrushCollision(obj, brush, 0.8f);
                 }
             }
+            
+            //eraser declaration
+            bool erasing = false;
+            float eraserRadius = 30.f;
+            if(IsKeyDown(KEY_E)){
+                erasing = true;
+                
+            } else {
+                erasing = false;
+            }
+            
+            
 
             t.UPDATE();
             g.UPDATE();
@@ -96,11 +108,55 @@ int main(void){
                     for (auto &brush : brushes) {
                         brush.Draw();
                     }
+                    
+                    if(erasing){
+                        DrawCircle(mousex, mousey, eraserRadius, GRAY);
+                    }
 
                 EndMode2D();
 
             EndDrawing();
             //End of drawing ----------------------------------------------------------------------------------------------------------
+            //Eraser
+            
+            
+            
+            if(erasing){
+                
+                
+                for (auto it = circles.begin(); it != circles.end(); ) {
+                    if (it->position.x + it->radius > mousex - eraserRadius && it->position.x - it->radius < mousex + eraserRadius&&
+                    it->position.y + it->radius > mousey - eraserRadius && it->position.y - it->radius < mousey + eraserRadius &&
+                    erasing) {
+        
+                        it = circles.erase(it);
+                } else {
+                    ++it;
+                }
+            }
+            
+                for (auto it = brushes.begin(); it != brushes.end(); ) {
+                    if (mousex + eraserRadius >= it->rect.x &&
+                    mousex - eraserRadius <= it->rect.x + it->rect.width &&
+                    mousey + eraserRadius >= it->rect.y &&
+                    mousey - eraserRadius <= it->rect.y + it->rect.height &&
+                    erasing) {
+    
+                        it = brushes.erase(it);
+                    } else {
+                        ++it;
+                    }
+
+                }
+            }
+
+
+
+
+
+            
+
+
 
             //input handling
             if(IsKeyPressed(KEY_D)){
@@ -118,7 +174,6 @@ int main(void){
             }  
 
             if (IsKeyDown(KEY_M)){
-                circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
                 circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
             }
 
@@ -142,4 +197,3 @@ int main(void){
     TESTSRESULTS();
     return 0;
 }
-
