@@ -119,6 +119,7 @@ int main(void){
 
             if (IsKeyDown(KEY_M)){
                 circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
+                circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
             }
 
             if (IsKeyDown(KEY_O)){
@@ -141,3 +142,4 @@ int main(void){
     TESTSRESULTS();
     return 0;
 }
+
