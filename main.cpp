@@ -8,6 +8,8 @@ int main(void){
 
     InitWindow(screenWidth, screenHeight, "Physics2D");
     SetTargetFPS(60);
+    
+    SandSystem sand;
 
     bool running = true;
     while(running){
@@ -52,6 +54,12 @@ int main(void){
                 }
             }
             
+            if (IsKeyDown(KEY_S)) {
+                sand.AddParticle(mouseVec);
+            }
+            sand.Update();
+            
+            
             //eraser declaration
             bool erasing = false;
             float eraserRadius = 30.f;
@@ -78,7 +86,7 @@ int main(void){
                         
                         cam.printText(fps, runtime,mousex, mousey, t, r, g,  frictionCoefficient, BARRIERS);
                         
-                        
+                    sand.Draw();
 
 
                     for(int i=0;i<=BARRIERS.x;i++){

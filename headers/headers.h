@@ -5,4 +5,5 @@
 #include "physicsPBD.hpp"
 #include "simulationSettings.hpp"
 #include "tests.hpp"
+#include "physicsPBD.hpp"
 #endif

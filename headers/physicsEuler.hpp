@@ -129,7 +129,9 @@ class objectCircle{
 
         setTest(TEST_APPLYFORCE);
     }
-
+    
+    
+    
 };
 
 void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution) {
@@ -220,6 +222,8 @@ void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restit
     }
     setTest(TEST_BRUSH_CIRCLE);
 }
+
+
 
 
 #endif
