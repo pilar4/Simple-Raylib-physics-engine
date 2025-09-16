@@ -6,45 +6,40 @@
 #include <vector>
 #include <cmath>
 
-using namespace std;
 
 
 
 class SandParticle {
 public:
-    Vector2 position;
-    Vector2 velocity;
+    Vector2 position;        
+    Vector2 prevPosition;    
+    Vector2 acceleration;    
     float radius;
     Color color;
 
     SandParticle(Vector2 pos, float r = 3.0f, Color c = GOLD)
-        : position(pos), radius(r), color(c) {
-        velocity = {0.0f, 0.0f};
+        : position(pos), prevPosition(pos), acceleration({0, 0}), radius(r), color(c) {}
+
+    void UPDATE(float dt) {
+        // Verlet integration
+        Vector2 temp = position;
+        Vector2 velocity = position - prevPosition;   // v = x - x_prev
+        position += velocity + acceleration * (dt * dt);  
+        prevPosition = temp;
+
+        // Reset acceleration
+        acceleration = {0, 0};
+
+        // Kolizja z podłożem (position correction zamiast velocity bounce)
+        if (position.y + radius > screenHeight) position.y = screenHeight - radius;
+        if (position.y - radius < 0) position.y = 0 + radius;
+        // Kolizja z bokami
+        if (position.x - radius < 0) position.x = radius;
+        if (position.x + radius > screenWidth) position.x = screenWidth - radius;
     }
 
-    void Update() {
-        // Apply g.GRAVITY
-        velocity.y += g.GRAVITY.y * t.deltaTime;
-
-        // Update position
-        position.x += velocity.x * t.deltaTime;
-        position.y += velocity.y * t.deltaTime;
-
-        // Simple floor collision
-        if (position.y + radius > screenHeight) {
-            position.y = screenHeight - radius;
-            velocity.y *= -0.3f;  // bounce with damping
-        }
-
-        // Left/right screen bounds
-        if (position.x - radius < 0) {
-            position.x = radius;
-            velocity.x *= -0.3f;
-        }
-        if (position.x + radius > screenWidth) {
-            position.x = screenWidth - radius;
-            velocity.x *= -0.3f;
-        }
+    void APPLYFORCE(Vector2 force) {
+        acceleration = Vector2Add(acceleration, force);
     }
 
     void Draw() {
@@ -52,7 +47,7 @@ public:
     }
 };
 
-// Optional: simple Sand system
+// System PBD
 class SandSystem {
 public:
     vector<SandParticle> particles;
@@ -61,9 +56,10 @@ public:
         particles.push_back(SandParticle(pos));
     }
 
-    void Update() {
+    void UPDATE(float dt) {
         for (auto &p : particles) {
-            p.Update();
+            p.APPLYFORCE(g.GRAVITY);
+            p.UPDATE(dt);
         }
     }
 
@@ -73,7 +69,6 @@ public:
         }
     }
 };
-
 
 
 

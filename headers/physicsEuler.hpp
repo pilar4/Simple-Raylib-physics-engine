@@ -6,13 +6,16 @@
 #include "cameraHud.hpp"
 // using semi-implicit Euler
 
+
+
+
 class objectCircle{
   public:
     
     Vector2 position;      
     Vector2 velocity;       
     Vector2 acceleration;
-    double radius = 20.f;
+    double radius = 25.f;
     //double instead of float because it increases precision by a wide margin
     //also the smaller delta time the better for simulations
 
@@ -62,7 +65,7 @@ class objectCircle{
 
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
-        setTest(TEST_APPLYFRICTION);
+        setTest(TEST_APPLYFORCE);
     }
 
     void PULLOBJ(Vector2 mouseVec) {
@@ -126,8 +129,12 @@ class objectCircle{
             Vector2 friction = Vector2Scale(Vector2Normalize(velocity), -frictionCoefficient);
             APPLYFORCE(friction);
         }
+        
+        Vector2 friction = Vector2Scale(Vector2Normalize(velocity), -frictionCoefficient);
+        APPLYFORCE(friction/2);
+        //air resistance
 
-        setTest(TEST_APPLYFORCE);
+        setTest(TEST_APPLYFRICTION);
     }
     
     
@@ -139,7 +146,7 @@ void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution) {
     float distance = Vector2Length(displacement);
     float minDist = A.radius + B.radius;
 
-    if (distance < minDist && distance > 0.0f) {
+    if (distance < minDist && distance > 0.0f && A.isDragging==false && B.isDragging==false) {
         // normal = displacement / distance
         Vector2 normal = Vector2Scale(displacement, 1.0f / distance);
 
