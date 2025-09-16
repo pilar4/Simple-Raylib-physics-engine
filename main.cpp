@@ -57,7 +57,7 @@ int main(void){
             if (IsKeyDown(KEY_S)) {
                 sand.AddParticle(mouseVec);
             }
-            sand.Update();
+            sand.UPDATE(t.deltaTime);
             
             
             //eraser declaration
