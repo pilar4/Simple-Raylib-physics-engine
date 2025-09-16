@@ -36,14 +36,20 @@ public:
         // Kolizja z bokami
         if (position.x - radius < 0) position.x = radius;
         if (position.x + radius > screenWidth) position.x = screenWidth - radius;
+        
+        setTest(TEST_SAND_UPDATE);
     }
 
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
+        
+        setTest(TEST_APPLYFORCE_SAND);
     }
 
     void Draw() {
         DrawCircleV(position, radius, color);
+        
+        setTest(TEST_DRAW_SAND);
     }
 };
 
@@ -54,19 +60,26 @@ public:
 
     void AddParticle(Vector2 pos) {
         particles.push_back(SandParticle(pos));
+        
+        setTest(TEST_ADD_SAND);
     }
 
     void UPDATE(float dt) {
         for (auto &p : particles) {
             p.APPLYFORCE(g.GRAVITY);
             p.UPDATE(dt);
+            
+            setTest(TEST_SAND_UMAIN);
         }
+        
     }
 
     void Draw() {
         for (auto &p : particles) {
             p.Draw();
         }
+        
+        setTest(TEST_SAND_DRAW);
     }
 };
 

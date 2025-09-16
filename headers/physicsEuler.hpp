@@ -65,7 +65,8 @@ class objectCircle{
 
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
-        setTest(TEST_APPLYFORCE);
+        
+        setTest(TEST_APPLYFORCE_CIRCLE);
     }
 
     void PULLOBJ(Vector2 mouseVec) {
@@ -183,6 +184,7 @@ class Brush {
 
     void Draw() {
         DrawRectangleRec(rect, color);
+        setTest(TEST_BRUSH_DRAW);
     }
 };
 

@@ -156,6 +156,8 @@ int main(void){
                     }
 
                 }
+                
+                setTest(TEST_ERASER);
             }
 
 
