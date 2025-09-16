@@ -56,14 +56,14 @@ class CameraHud {
         }
         
         float leftLimit   = 0 + (camera.offset.x / camera.zoom);
-float topLimit    = 0 + (camera.offset.y / camera.zoom);
-float rightLimit  = BARRIERS.x - (GetScreenWidth() - camera.offset.x) / camera.zoom;
-float bottomLimit = BARRIERS.y - (GetScreenHeight() - camera.offset.y) / camera.zoom;
+        float topLimit    = 0 + (camera.offset.y / camera.zoom);
+        float rightLimit  = BARRIERS.x - (GetScreenWidth() - camera.offset.x) / camera.zoom;
+        float bottomLimit = BARRIERS.y - (GetScreenHeight() - camera.offset.y) / camera.zoom;
 
-if (camera.target.x < leftLimit) camera.target.x = leftLimit;
-if (camera.target.y < topLimit) camera.target.y = topLimit;
-if (camera.target.x > rightLimit) camera.target.x = rightLimit;
-if (camera.target.y > bottomLimit) camera.target.y = bottomLimit;
+        if (camera.target.x < leftLimit) camera.target.x = leftLimit;
+        if (camera.target.y < topLimit) camera.target.y = topLimit;
+        if (camera.target.x > rightLimit) camera.target.x = rightLimit;
+        if (camera.target.y > bottomLimit) camera.target.y = bottomLimit;
 
 
     
@@ -113,7 +113,9 @@ if (camera.target.y > bottomLimit) camera.target.y = bottomLimit;
         DrawText(TextFormat("Friction: %.f", frictionCoefficient),
         baseX, baseY + line * lineStep, textFont, SKYBLUE);
         line++;
- 
+        
+        
+        setTest(TEST_PRINT_TEXT);
         //DrawText("Q: reset objects, C: reset parameters, D: spawn balls, "     Looks ugly
         //"Time: SPACE Z X Restitution: T G, Gravity: I J K L, O: 8ball mode",   maybe put it in
         //baseX, baseY + line * lineStep, textFont, SKYBLUE);                    left corner
