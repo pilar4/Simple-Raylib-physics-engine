@@ -14,3 +14,4 @@
 - [ ] Toolbar w/ toggle on/off
 - [x] Some basic settings
 - [ ] Explosions
+- [ ] Documentation
