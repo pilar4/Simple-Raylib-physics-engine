@@ -9,7 +9,9 @@ int main(void){
     InitWindow(screenWidth, screenHeight, "Physics2D");
     SetTargetFPS(60);
     
+    
     SandSystem sand;
+    
 
     bool running = true;
     while(running){
@@ -45,19 +47,36 @@ int main(void){
                 obj.DETECTBARRIERS(BARRIERS, r.RESTITUTION); 
                 obj.PULLOBJ(mouseVec);
 
-                for (auto& sobj : circles) {
-                    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
-                }
-
-                for (auto &brush : brushes) {
-                    CircleBrushCollision(obj, brush, 0.8f);
-                }
+                //for (auto& sobj : circles) {
+                //    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
+                //} 
             }
+            
+            for (int i = 0; i < 8; i++) { // 8 iterations of collision
+                for (auto &a : circles) {
+                    for (auto &b : circles) {
+                        if (&a != &b) CIRCLECOLLISION(a, b, r.RESTITUTION);
+                    }
+                    for (auto &brush : brushes) {
+                        CircleBrushCollision(a, brush, r.RESTITUTION);
+                    }
+                }
+                for (auto &brush : brushes) {
+                    
+                        for (auto &sandp : sand.particles){
+                            SandBrushCollision(sandp, brush, 0.8f);
+                        }
+                    }
+                
+            }
+               
+            
             
             if (IsKeyDown(KEY_S)) {
                 sand.AddParticle(mouseVec);
             }
             sand.UPDATE(t.deltaTime);
+            //for whatever reason when you make delta time smaller sand stops to clip somewhere around 1/200
             
             
             //eraser declaration
@@ -197,6 +216,7 @@ int main(void){
 
             if(IsKeyPressed(KEY_Q)){
                 circles.clear();
+                sand.RESETSAND();
                 break;
             }
 
