@@ -132,7 +132,7 @@ class objectCircle{
         }
         
         Vector2 friction = Vector2Scale(Vector2Normalize(velocity), -frictionCoefficient);
-        APPLYFORCE(friction/2);
+        APPLYFORCE(friction/1.05f);
         //air resistance
 
         setTest(TEST_APPLYFRICTION);
