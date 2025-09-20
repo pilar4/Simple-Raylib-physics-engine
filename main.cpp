@@ -10,7 +10,7 @@ int main(void){
     SetTargetFPS(60);
     
     
-    SandSystem sand;
+    ObjectsSystem PBD;
     
 
     bool running = true;
@@ -47,9 +47,9 @@ int main(void){
                 obj.DETECTBARRIERS(BARRIERS, r.RESTITUTION); 
                 obj.PULLOBJ(mouseVec);
 
-                //for (auto& sobj : circles) {
-                //    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
-                //} 
+                for (auto& sobj : circles) {
+                    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
+                } 
             }
             
             for (int i = 0; i < 8; i++) { // 8 iterations of collision
@@ -63,20 +63,26 @@ int main(void){
                 }
                 for (auto &brush : brushes) {
                     
-                        for (auto &sandp : sand.particles){
-                            SandBrushCollision(sandp, brush, 0.8f);
+                        for (auto &PBDp : PBD.particles){
+                            BallBrushCollision(PBDp, brush, r.RESTITUTION);
                         }
                     }
                 
             }
+            for(auto &circle : circles){
+    for(auto &pbdBall : PBD.particles){
+        PBD_EULER_COLLISION(pbdBall, circle, r.RESTITUTION);
+    }
+}
+
                
             
+            if (IsKeyPressed(KEY_S)) {
             
-            if (IsKeyDown(KEY_S)) {
-                sand.AddParticle(mouseVec);
+                PBD.AddParticle(mouseVec);
             }
-            sand.UPDATE(t.deltaTime);
-            //for whatever reason when you make delta time smaller sand stops to clip somewhere around 1/200
+            PBD.UPDATE(t.deltaTime, mouseVec);
+            //for whatever reason when you make delta time smaller PBD stops to clip somewhere around 1/200
             
             
             //eraser declaration
@@ -105,7 +111,7 @@ int main(void){
                         
                         cam.printText(fps, runtime,mousex, mousey, t, r, g,  frictionCoefficient, BARRIERS);
                         
-                    sand.Draw();
+                    PBD.Draw();
 
 
                     for(int i=0;i<=BARRIERS.x;i++){
@@ -216,7 +222,7 @@ int main(void){
 
             if(IsKeyPressed(KEY_Q)){
                 circles.clear();
-                sand.RESETSAND();
+                PBD.RESETBALLS();
                 break;
             }
 

@@ -1,17 +1,15 @@
 # PhysicsEngine
-**Simple single-threaded 2D physics engine, developed from scratch using RayLib and C++**  
-**This project is designed to help learn and explore the fundamentals of simulating physics**
-**As well as expanding our knowledge on using GitHub and collaborating in a team (in this case, a duo).**
-### Planned:
-- [x] Bouncing balls
-- [x] Rigid bodies
-- [x] Working camera
-- [ ] Sand
-- [ ] Water / other liquids
-- [x] Gravity manipulation
-- [ ] Gravity fields (black holes and such)
-- [x] Time slow / stop
-- [ ] Toolbar w/ toggle on/off
-- [x] Some basic settings
-- [ ] Explosions
+**Simple single-threaded 2D physics engine, developed from scratch using RayLib and C++.**  
+This project is designed to help learn and explore the fundamentals of simulating physics.  
+It also helps us learn GitHub usage and collaborative development.
+
+### Features / Planned:
+- [x] Calculating physics using semi-implicit Euler integration
+- [x] Calculating physics using PBD (Verlet integration)
+- [x] Working collision between both types of objects
+- [x] Working camera and HUD displaying information
+- [x] Manipulating variables in real time (delta time, restitution, gravity)
 - [ ] Documentation
+- [ ] Screenshots and videos showcasing this project
+
+
