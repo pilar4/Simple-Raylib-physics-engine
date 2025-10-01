@@ -15,7 +15,7 @@ These lines all introduce containers for core objects used in this project.
 
 **L101–148:** Handles drawing. First, the background and info attached to the camera are drawn. Line 111 draws `objPBD`, followed by barriers, `objEuler`, and finally the brush (or just rigid body).
 
-**L154–194:** Calculates the eraser, with two loops checking if the mouse is over objects—one for PBD, one for Euler.
+**L154–194:** Calculates the eraser, with three loops checking if the mouse is over objects—one for PBD, one for Euler and one for brush.
 
 **L198–229:** Handles simple input. It is also worth noting that the main `while` loop running this project is inside another loop. This allows pressing "Q" to break the inner loop and reset the application without closing it entirely.
 
