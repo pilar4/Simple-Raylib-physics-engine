@@ -9,7 +9,7 @@
 
 
 
-class objectCircle{
+class objectEuler{
   public:
     
     Vector2 position;      
@@ -21,7 +21,6 @@ class objectCircle{
 
     static constexpr Color warmColors[5] = { RED, ORANGE, GOLD, YELLOW, PINK };
     Color circleColor = warmColors[GetRandomValue(0, 4)];
-
     //color here so each frame doesnt change color
     
     bool isDragging = false;
@@ -143,7 +142,7 @@ class objectCircle{
     
 };
 
-void CIRCLECOLLISION(objectCircle& A, objectCircle& B, float restitution) {
+void CIRCLECOLLISION(objectEuler& A, objectEuler& B, float restitution) {
     Vector2 displacement = Vector2Subtract(B.position, A.position);
     float distance = Vector2Length(displacement);
     float minDist = A.radius + B.radius;
