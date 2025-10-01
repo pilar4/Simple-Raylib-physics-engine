@@ -13,22 +13,20 @@ using namespace std;
 // where X is position, n is step (in time), a is acceleration and Δt is delta time
 
 
-class BallParticle {
+class objectPBD{
   public:
-    Vector2 position;        
-    Vector2 prevPosition;    
+    Vector2 position;
+    Vector2 prevPosition;
     Vector2 acceleration;
-    double radius;
-    Color color;
+    double radius = 25.f;
+    
+    
+    static constexpr Color coldColors[5] = { BLUE, DARKBLUE, SKYBLUE, PURPLE, DARKPURPLE };
+    Color circleColor = coldColors[GetRandomValue(0, 4)];
     
     bool isDragging = false;
 
-    BallParticle(Vector2 pos, float r = 25.0f, Color c = GOLD)
-        : position(pos), prevPosition(pos), acceleration({0, 0}), radius(r), color(c) {
-            
-            static constexpr Color coldColors[5] = { BLUE, DARKBLUE, SKYBLUE, PURPLE, DARKPURPLE };
-            color = coldColors[GetRandomValue(0, 4)];
-        }
+        
     
 
     void UPDATE(float dt) {
@@ -51,49 +49,57 @@ class BallParticle {
             0
         };
 
-        // === Screen boundaries with bounce ===
+        
         // Bottom
         if (position.y + radius > screenHeight) {
             position.y = screenHeight - radius;
 
-            // Oblicz prędkość (Verlet)
             Vector2 velocity = Vector2Subtract(position, prevPosition);
 
-            // Zastosuj restitution tylko na osi Y
             velocity.y *= -r.RESTITUTION;
 
-            // Zachowaj X bez strat, bo to podłoga (nie ściana)
             prevPosition = Vector2Subtract(position, velocity);
         }
 
         // Top
         if (position.y - radius < 0) {
             position.y = radius;
+            
             velocity = Vector2Subtract(position, prevPosition);
+            
             velocity.y *= -r.RESTITUTION;
+            
             prevPosition.y = position.y - velocity.y;
         }
+        
         // Left
         if (position.x - radius < 0) {
             position.x = radius;
+            
             velocity = Vector2Subtract(position, prevPosition);
+            
             velocity.x *= -r.RESTITUTION;
+            
             prevPosition.x = position.x - velocity.x;
         }
+        
         // Right
         if (position.x + radius > screenWidth) {
             position.x = screenWidth - radius;
+            
             velocity = Vector2Subtract(position, prevPosition);
+            
             velocity.x *= -r.RESTITUTION;
+            
             prevPosition.x = position.x - velocity.x;
         }
 
         setTest(TEST_SAND_UPDATE);
     }
     
-     void PULLBALL(Vector2 mousePos) {
+    void PULLBALL(Vector2 mousePos) {
         if (IsMouseButtonDown(MOUSE_LEFT_BUTTON)) {
-            // sprawdź, czy myszka jest w obrębie kulki
+            //check if mouse is dragging
             if (!isDragging &&
                 mousePos.x < position.x + radius && mousePos.y < position.y + radius &&
                 mousePos.x > position.x - radius && mousePos.y > position.y - radius) {
@@ -101,11 +107,11 @@ class BallParticle {
             }
 
             if (isDragging) {
-                // przesuń kulkę do myszki
+                //move obj to new position that is mouse position, vector delta is there 
+                //to make prev position
                 Vector2 delta = Vector2Subtract(mousePos, position);
                 position = mousePos;
 
-                // ustaw prevPosition, aby Verlet zachował prędkość
                 prevPosition = Vector2Subtract(position, Vector2Scale(delta, 0.5f));
             }
         } else {
@@ -121,7 +127,7 @@ class BallParticle {
     }
 
     void Draw() {
-        DrawCircleV(position, radius, color);
+        DrawCircleV(position, radius, circleColor);
         setTest(TEST_DRAW_SAND);
     }
 };

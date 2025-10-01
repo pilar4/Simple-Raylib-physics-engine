@@ -10,13 +10,13 @@ int main(void){
     SetTargetFPS(60);
     
     
-    ObjectsSystem PBD;
+    ObjectsSystemPBD PBD;
     
 
     bool running = true;
     while(running){
 
-        vector<objectCircle> circles;
+        vector<objectEuler> circles;
         vector<Brush> brushes;
 
 
@@ -70,19 +70,20 @@ int main(void){
                 
             }
             for(auto &circle : circles){
-    for(auto &pbdBall : PBD.particles){
-        PBD_EULER_COLLISION(pbdBall, circle, r.RESTITUTION);
-    }
-}
+                for(auto &pbdBall : PBD.particles){
+                    PBD_EULER_COLLISION(pbdBall, circle, r.RESTITUTION);
+                }
+            }
 
                
             
             if (IsKeyPressed(KEY_S)) {
             
-                PBD.AddParticle(mouseVec);
+                PBD.AddParticlePBD(mouseVec);
             }
-            PBD.UPDATE(t.deltaTime, mouseVec);
-            //for whatever reason when you make delta time smaller PBD stops to clip somewhere around 1/200
+            
+            PBD.UPDATEPBD(t.deltaTime, mouseVec);
+            
             
             
             //eraser declaration
@@ -197,6 +198,7 @@ int main(void){
             if(IsKeyPressed(KEY_D)){
                 circles.push_back({{mousex, mousey}, {0, 0}, {0, 0}});
             }
+           
 
             if (IsMouseButtonDown(MOUSE_BUTTON_RIGHT)) {
                 brushes.push_back(Brush(mousex, mousey, 10, 10));

@@ -6,7 +6,7 @@
 
 
 
-void HANDLECOLLISION(BallParticle& A, BallParticle& B) {
+void HANDLECOLLISION(objectPBD& A, objectPBD& B) {
     Vector2 displacement = Vector2Subtract(B.position, A.position);
     float distance = Vector2Length(displacement);
     float minDist = A.radius + B.radius;
@@ -29,7 +29,7 @@ void HANDLECOLLISION(BallParticle& A, BallParticle& B) {
     setTest(TEST_SAND_COLLISION);
 }
 
-void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restitution) {
+void CircleBrushCollision(objectEuler& circle, const Brush& brush, float restitution) {
     // find nearest point from square to circle
     //fminf means pick smaller number from two and vice versa with fmaxf
     
@@ -53,7 +53,8 @@ void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restit
         
         // 0.0001 so there is no division by 0
         if (distance > 0.0001f) {                           //IMPORTANT, vec normal is from square to circle ONLY and not otherwise
-            normal = {dx / distance, dy / distance};        //so if vel is in the same direction it will have a positive num, this is why there is if there
+            normal = {dx / distance, dy / distance};        //so if vel is in the same direction it will have a positive num, 
+                                                            //this is   why there is if there
         } else {                                     
             normal = {0, -1};  // if somehow distance is even closer to 0 and all hell let loose
         }
@@ -77,7 +78,7 @@ void CircleBrushCollision(objectCircle& circle, const Brush& brush, float restit
 
 
 
-void BallBrushCollision(BallParticle& ball, const Brush& brush, float restitution) {
+void BallBrushCollision(objectPBD& ball, const Brush& brush, float restitution) {
     float nearestX = fmaxf(brush.rect.x, fminf(ball.position.x, brush.rect.x + brush.rect.width));
     float nearestY = fmaxf(brush.rect.y, fminf(ball.position.y, brush.rect.y + brush.rect.height));
 
@@ -116,7 +117,7 @@ void BallBrushCollision(BallParticle& ball, const Brush& brush, float restitutio
 }
 
 
-void PBD_EULER_COLLISION(BallParticle& pbdBall, objectCircle& eulerBall, float restitution) {
+void PBD_EULER_COLLISION(objectPBD& pbdBall, objectEuler& eulerBall, float restitution) {
     Vector2 disp = Vector2Subtract(eulerBall.position, pbdBall.position);
     float dist = Vector2Length(disp);
     float minDist = pbdBall.radius + eulerBall.radius;
@@ -146,20 +147,16 @@ void PBD_EULER_COLLISION(BallParticle& pbdBall, objectCircle& eulerBall, float r
     }
 }
 
-class ObjectsSystem {
+class ObjectsSystemPBD {
   public:
-    vector<BallParticle> particles;
+    vector<objectPBD> particles;
     
-    void AddParticle(Vector2 pos) {
-        particles.push_back(BallParticle(pos));
+    void AddParticlePBD(Vector2 mousePos) {
+        particles.push_back({mousePos, mousePos, {0,0}, 25.f});
         setTest(TEST_ADD_SAND);
     }
-    
-    
 
-
-
-    void UPDATE(float dt, Vector2 mousePos) {
+    void UPDATEPBD(float dt, Vector2 mousePos) {
         if (dt == 0.0f) return;  // zatrzymanie czasu
 
         for (auto &p : particles) {
