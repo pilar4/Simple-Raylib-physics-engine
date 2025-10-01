@@ -12,7 +12,6 @@ int main(void){
     
     ObjectsSystemPBD PBD;
     
-
     bool running = true;
     while(running){
 
@@ -29,15 +28,16 @@ int main(void){
             auto currentTime = std::chrono::high_resolution_clock::now();
             std::chrono::duration<float> elapsed = currentTime - startTime;
             float runtime = elapsed.count();
+            
+            cam.Update();
 
             int fps = GetFPS();
-            cam.Update();
             Vector2 worldPos = GetScreenToWorld2D(GetMousePosition(), cam.GetCamera());
             float mousex = worldPos.x;
             float mousey = worldPos.y;
             Vector2 mouseVec = {mousex, mousey};
-
-            //initializing physics
+            
+            //initializing physics for euler
             for (auto& obj : circles) {
                 obj.APPLYFORCE(g.GRAVITY);                  
                 obj.ISONGROUND(BARRIERS);
@@ -46,10 +46,6 @@ int main(void){
                 obj.UPDATEPOSITION();           
                 obj.DETECTBARRIERS(BARRIERS, r.RESTITUTION); 
                 obj.PULLOBJ(mouseVec);
-
-                for (auto& sobj : circles) {
-                    CIRCLECOLLISION(obj, sobj, r.RESTITUTION);
-                } 
             }
             
             for (int i = 0; i < 8; i++) { // 8 iterations of collision
@@ -67,21 +63,21 @@ int main(void){
                             BallBrushCollision(PBDp, brush, r.RESTITUTION);
                         }
                     }
-                
+                    
+                for(auto &circle : circles){
+                    for(auto &pbdBall : PBD.particles){
+                        PBD_EULER_COLLISION(pbdBall, circle, r.RESTITUTION);
+                    }
+                }    
+                  
             }
-            for(auto &circle : circles){
-                for(auto &pbdBall : PBD.particles){
-                    PBD_EULER_COLLISION(pbdBall, circle, r.RESTITUTION);
-                }
-            }
+            
 
                
-            
+            //adding pbd obj 
             if (IsKeyPressed(KEY_S)) {
-            
                 PBD.AddParticlePBD(mouseVec);
             }
-            
             PBD.UPDATEPBD(t.deltaTime, mouseVec);
             
             
@@ -164,10 +160,21 @@ int main(void){
                     erasing) {
         
                         it = circles.erase(it);
-                } else {
+                    } else {
                     ++it;
+                    }
                 }
-            }
+                for (auto it = PBD.particles.begin(); it != PBD.particles.end(); ) {
+                    if (it->position.x + it->radius > mousex - eraserRadius && it->position.x - it->radius < mousex + eraserRadius&&
+                    it->position.y + it->radius > mousey - eraserRadius && it->position.y - it->radius < mousey + eraserRadius &&
+                    erasing) {
+        
+                            it = PBD.particles.erase(it);
+                    } else {
+                    ++it;
+                    }
+                }
+                
             
                 for (auto it = brushes.begin(); it != brushes.end(); ) {
                     if (mousex + eraserRadius >= it->rect.x &&
@@ -185,14 +192,7 @@ int main(void){
                 
                 setTest(TEST_ERASER);
             }
-
-
-
-
-
             
-
-
 
             //input handling
             if(IsKeyPressed(KEY_D)){
@@ -228,8 +228,8 @@ int main(void){
                 break;
             }
 
-        } // koniec while (!WindowShouldClose())
-    } // koniec while(running)
+        } 
+    } 
 
     CloseWindow();
     TESTSRESULTS();

@@ -94,7 +94,7 @@ class objectPBD{
             prevPosition.x = position.x - velocity.x;
         }
 
-        setTest(TEST_SAND_UPDATE);
+        setTest(TEST_PBD_UPDATE);
     }
     
     void PULLBALL(Vector2 mousePos) {
@@ -123,12 +123,12 @@ class objectPBD{
 
     void APPLYFORCE(Vector2 force) {
         acceleration = Vector2Add(acceleration, force);
-        setTest(TEST_APPLYFORCE_SAND);
+        setTest(TEST_APPLYFORCE_PBD);
     }
 
     void Draw() {
         DrawCircleV(position, radius, circleColor);
-        setTest(TEST_DRAW_SAND);
+        setTest(TEST_DRAW_PBD);
     }
 };
 

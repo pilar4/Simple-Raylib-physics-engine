@@ -19,14 +19,14 @@ void HANDLECOLLISION(objectPBD& A, objectPBD& B) {
         
 
 
-        float correctionFactor = 0.5f; // połówka penetracji idzie do każdej kulki
+        float correctionFactor = 0.5f;
         Vector2 correction = Vector2Scale(normal, penetration * correctionFactor);
 
         A.position = Vector2Subtract(A.position, correction);
         B.position = Vector2Add(B.position, correction);
     }
 
-    setTest(TEST_SAND_COLLISION);
+    setTest(TEST_PBD_COLLISION);
 }
 
 void CircleBrushCollision(objectEuler& circle, const Brush& brush, float restitution) {
@@ -34,7 +34,6 @@ void CircleBrushCollision(objectEuler& circle, const Brush& brush, float restitu
     //fminf means pick smaller number from two and vice versa with fmaxf
     
     
-    //                realy smart line lmao no way i would have figured it out
     //                if circle position is bigger than right side of rectangle position then nearest is set as right side of square
     //                and if circle position is more to the left than the left side of square, value is set as this side
     //                OTHERWISE, the nearest is set as circle position, same with y axis
@@ -99,8 +98,7 @@ void BallBrushCollision(objectPBD& ball, const Brush& brush, float restitution) 
         ball.position.y += normal.y * penetration;
 
         // Verlet: v = pos - prevPos
-        Vector2 v = { ball.position.x - ball.prevPosition.x,
-                      ball.position.y - ball.prevPosition.y };
+        Vector2 v = {ball.position.x - ball.prevPosition.x, ball.position.y - ball.prevPosition.y};
 
         float velAlongNormal = Vector2DotProduct(v, normal);
 
@@ -113,7 +111,7 @@ void BallBrushCollision(objectPBD& ball, const Brush& brush, float restitution) 
         }
     }
     
-    setTest(TEST_SAND_BRUSH_COLLISION);
+    setTest(TEST_PBD_BRUSH_COLLISION);
 }
 
 
@@ -126,16 +124,16 @@ void PBD_EULER_COLLISION(objectPBD& pbdBall, objectEuler& eulerBall, float resti
         Vector2 normal = Vector2Scale(disp, 1.0f / dist);
         float penetration = minDist - dist;
 
-        // Przesuwamy po połowie penetracji
+        
         Vector2 correction = Vector2Scale(normal, penetration * 0.5f);
 
-        // PBD: tylko przesunięcie pozycji
+        
         pbdBall.position = Vector2Subtract(pbdBall.position, correction);
 
-        // Euler: przesunięcie + modyfikacja velocity
+        
         eulerBall.position = Vector2Add(eulerBall.position, correction);
 
-        // Impuls dla Euler
+        
         Vector2 relativeVel = eulerBall.velocity;
         float velAlongNormal = Vector2DotProduct(relativeVel, normal);
 
@@ -153,11 +151,11 @@ class ObjectsSystemPBD {
     
     void AddParticlePBD(Vector2 mousePos) {
         particles.push_back({mousePos, mousePos, {0,0}, 25.f});
-        setTest(TEST_ADD_SAND);
+        setTest(TEST_ADD_PBD);
     }
 
     void UPDATEPBD(float dt, Vector2 mousePos) {
-        if (dt == 0.0f) return;  // zatrzymanie czasu
+        if (dt == 0.0f) return;  //time stop
 
         for (auto &p : particles) {
             p.APPLYFORCE(g.GRAVITY);
@@ -169,7 +167,7 @@ class ObjectsSystemPBD {
 
         
         }
-        setTest(TEST_SAND_UMAIN);
+        setTest(TEST_PBD_UMAIN);
     }
 
 
@@ -177,7 +175,7 @@ class ObjectsSystemPBD {
         for (auto &p : particles) {
             p.Draw();
         }
-        setTest(TEST_SAND_DRAW);
+        setTest(TEST_PBD_DRAW);
     }
     
     void RESETBALLS(void){
