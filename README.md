@@ -1,7 +1,6 @@
 # PhysicsEngine
-**Simple single-threaded 2D physics engine, developed from scratch using RayLib and C++.**  
-This project is designed to help learn and explore the fundamentals of simulating physics.  
-It also helps us learn GitHub usage and collaborative development.
+**A simple single-threaded 2D physics engine, developed from scratch in C++ with RayLib as the graphical interface.**  
+This project is designed to help learn and explore the fundamentals of simulating physics as well as GitHub usage and collaborative development.
 
 ### Features / Planned:
 - [x] Calculating object physics using semi-implicit Euler integration
@@ -16,6 +15,7 @@ It also helps us learn GitHub usage and collaborative development.
 ### Videos:
 
 Warm color circles (RED, ORANGE, GOLD, YELLOW, PINK) are calculated using Euler integration
+
 Cold color circles (BLUE, DARKBLUE, SKYBLUE, PURPLE, DARKPURPLE) are calculated using PBD (Verlet integration)
 
 
