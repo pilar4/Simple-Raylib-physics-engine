@@ -9,7 +9,7 @@ It also helps us learn GitHub usage and collaborative development.
 - [x] Working collision between both types of said objects
 - [x] Working camera and HUD displaying information
 - [x] Manipulating variables in real time (delta time, restitution, gravity)
-- [ ] Documentation
-- [ ] Screenshots and videos showcasing this project
+
+
 
 
