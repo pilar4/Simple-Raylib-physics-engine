@@ -11,13 +11,12 @@ It also helps us learn GitHub usage and collaborative development.
 - [x] Manipulating variables in real time (delta time, restitution, gravity)
 - [x] Videos for showcasing
 
+-------------------
 
+### Videos:
 
-https://github.com/user-attachments/assets/d739c0ea-aebb-4a0f-a9a5-7ab45ee26957
-
-
-
-https://github.com/user-attachments/assets/a3ac9cff-2104-4040-a50d-bbd7e80ce939
+Warm color circles (RED, ORANGE, GOLD, YELLOW, PINK) are calculated using Euler integration
+Cold color circles (BLUE, DARKBLUE, SKYBLUE, PURPLE, DARKPURPLE) are calculated using PBD (Verlet integration)
 
 
 
@@ -26,6 +25,14 @@ https://github.com/user-attachments/assets/d02da19f-55c1-4d2b-b0c1-f5ab02c7c0b8
 
 
 https://github.com/user-attachments/assets/f601e72f-f8a9-4338-8e6e-776c3d94f9a1
+
+
+
+https://github.com/user-attachments/assets/d739c0ea-aebb-4a0f-a9a5-7ab45ee26957
+
+
+
+https://github.com/user-attachments/assets/a3ac9cff-2104-4040-a50d-bbd7e80ce939
 
 
 
